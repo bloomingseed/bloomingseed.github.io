@@ -1,2 +1,2 @@
-# bloomingseed.github.io
-my first github pages
+## bloomingseed.github.io
+- A portfolio page where I put self description and products I created/contributed.
