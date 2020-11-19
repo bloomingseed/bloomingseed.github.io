@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/custom.css">
+    <link rel="stylesheet" href="../styles/bloglink.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="../images/favicon.png"/>
+    <title>{{ page.title }} | bloomingseed Blog</title>
+  </head>
+<body>
+    <div class="container-fluid">
+	    <nav class="navbar navbar-light bg-success row">
+		    <div class="col-sm-10">
+			    <ul class="d-flex justify-content-around list-group list-unstyled list-group-horizontal-sm">
+				    <li class=""><a href="/">Home</a></li>
+				    <li class=""><a href="/blog/">Blog</a></li>
+				    <li class=""><a href="/articles/">Articles</a></li>
+				    <li class=""><a href="/about/">About</a></li>
+			    </ul>
+		    </div>
+		    <div class="col-sm-2">
+			    <ul class="d-flex justify-content-around list-group list-unstyled list-group-horizontal-sm">
+				    <li class=""><a href="https://facebook.com/nhattungnguyen.2kgl/">My Facebook</a></li>
+				    <li class=""><a href="https://github.com/bloomingseed/">My GitHub</a></li>
+			    </ul>
+		    </div>
+	    </nav>
+	    <div class="row bg-white py-2 px-3">
+		    <div class="col-sm-2">
+			    <h5>What I listened to recently</h5>
+			    <iframe id="ytplayer" type="text/html" width="100%"
+  src="https://www.youtube.com/playlist?list=PLrlqCsnaJGJfbDGh8spZwOd7YpzQnSkDc&origin=https://bloomingseed.github.io"
+  frameborder="0"></iframe>
+
+		    </div>
+		    <div class="container"> 
+		    {{ content }}
+		    </div>
+	    </div>
+
+      </div>
+      <footer class="container-fluid bg-dark py-3"> 
+	      <div class="row">
+		      <p class="col text-secondary text-center small">Sketched by <span class="text-success font-italic px-1">bloomingseed</span>. Nov,13<sup>nd</sup></p>
+	      </div>
+      </footer>
+</body>
+</html>
