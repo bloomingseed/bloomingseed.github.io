@@ -1,4 +1,7 @@
 categories:
 - posts:
+  - setup
+  title: github-pages
+- posts:
   - my-setup
   title: ubuntu
