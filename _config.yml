@@ -1,2 +1,11 @@
+# Site settings
+title: bloomingseed
 name: bloomingseed
+description: are you looking for something interesting? ;)
+domain: "bloomingseed.github.io"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://bloomingseed.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
 markdown: kramdown
+theme: jekyll-theme-hacker

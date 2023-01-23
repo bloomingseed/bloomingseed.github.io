@@ -1,50 +1,30 @@
-
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <meta name="google-site-verification" content="yQluwvwYR7TSYDyELFGyfZJ3haxQdb4u5nDa9vb_LNg" />
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="../styles/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles/custom.css">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/png" href="../images/favicon.png"/>
-    <title>{{ page.title }}</title>
+    {% include head-custom.html %}
+    {% seo %}
   </head>
-<body>
-    <div class="container-fluid">
-	    <div class="row">
-	    <nav class="col-sm-3 py-2 bg-dark text-white">
-		    <div class="container">
-			    <p>Categories</p>
-			    <ul>
-				    <li><a href="/">Home</a></li>
-				    <li><a href="/blog/">Blog</a></li>
-				    <li><a href="/articles/">Articles</a></li>
-				    <li><a href="/about/">About</a></li>
-			    </ul>
-		    </div>
-		    <div class="container">
-			    <p>Hot link</p>
-			    <ul>
-				    <li><a href="https://facebook.com/nhattungnguyen.2kgl/">My Facebook</a></li>
-				    <li><a href="https://github.com/bloomingseed/">My GitHub</a></li>
-			    </ul>
-		    </div>
-	    </nav>
-	    <div class="bg-white col-sm-9 py-2">
-		    {{ content }}
-	    </div>
-	    </div>
+  <body>
+    <!-- Site header -->
+    <header>
+      <div class="container">
+        <a id="a-title" href="{{ '/' | relative_url }}">
+          <h1>{{ site.title | default: site.github.repository_name }}</h1>
+        </a>
+        <h2>{{ site.description | default: site.github.project_tagline }}</h2>
+        <section id="downloads"></section>
       </div>
-      <footer class="container-fluid bg-dark py-3"> 
-	      <div class="row">
-		      <p class="col text-secondary text-center small">Sketched by <span class="text-success font-italic px-1">bloomingseed</span>. Nov,13<sup>nd</sup></p>
-	      </div>
-      </footer>
-</body>
+    </header>
+    <!-- Main content -->
+    <div class="container">
+      <section id="main_content">
+        {% include anchor_headings.html html=content anchorBody="#" %}
+      </section>
+    </div>
+  </body>
 </html>
