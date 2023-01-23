@@ -2,7 +2,8 @@
 layout: post
 code: my-setup
 title: My Setup on Ubuntu machine
-date: 23rd Jan, 2023
+date: Mon, 23 Jan 2023 12:30:21 +0700
+updated: Mon, 23 Jan 2023 12:30:21 +0700
 desc: This is how I setup my Ubuntu for personal use
 ---
 ## Vietnamese
