@@ -2,6 +2,7 @@ source "https://rubygems.org"
 gem "github-pages", "~> 227", group: :jekyll_plugins
 gem "jekyll-theme-hacker", "~> 0.2.0"
 gem "webrick", "~> 1.7"
+gem "jekyll-sitemap"
 
 # Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
 # and associated library.

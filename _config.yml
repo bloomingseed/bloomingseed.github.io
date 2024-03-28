@@ -1,7 +1,7 @@
 # Site settings
 title: bloomingseed
 name: bloomingseed
-description: are you looking for something interesting? ;)
+description: mathematicians save the world!
 domain: "bloomingseed.github.io"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://bloomingseed.github.io" # the base hostname & protocol for your site, e.g. http://example.com
@@ -9,3 +9,5 @@ url: "https://bloomingseed.github.io" # the base hostname & protocol for your si
 # Build settings
 markdown: kramdown
 theme: jekyll-theme-hacker
+plugins:
+    - jekyll-sitemap
