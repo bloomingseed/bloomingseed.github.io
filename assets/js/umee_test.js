@@ -43,69 +43,6 @@ createApp({
             step.value--;
         };
 
-        const submitViaFormElm = () => {
-            
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = POST_URL;
-
-            // Create input elements and append them to the form
-            const nameInput = document.createElement('input');
-            nameInput.type = 'hidden'; // Use hidden input
-            nameInput.name = 'Name';
-            nameInput.value = formData.value.name;
-            form.appendChild(nameInput);
-
-            const emailInput = document.createElement('input');
-            emailInput.type = 'hidden'; // Use hidden input
-            emailInput.name = 'Email';
-            emailInput.value = formData.value.email;
-            form.appendChild(emailInput);
-
-            // Append the form to the document (it won't be visible)
-            document.body.appendChild(form);
-            debugger;
-
-            // form.addEventListener("submit", function(e) {
-            //     debugger;
-            //     e.preventDefault();
-            //     const data = new FormData(form);
-            //     const action = e.target.action;
-            //     fetch(action, {
-            //     method: 'POST',
-            //     body: data,
-            //     })
-            //     .then(response => {
-            //         if (!response.ok) {
-            //             // If the response status code is not in the 200-299 range,
-            //             // it's considered an error.
-            //             throw new Error(`HTTP error! Status: ${response.status}`);
-            //         }
-            //         return response.text(); // Or response.json() if your server returns JSON
-            //     })
-            //     .then(data => {
-            //         // Handle the successful response data here
-            //         console.log("Success!", data); // Log the response data
-            //         alert("Success!"); // Show a success message
-            //     })
-            //     .catch(error => {
-            //         // This block will catch network errors and errors thrown in the 'then' blocks
-            //         console.error("Error during form submission:", error);
-
-            //         // Display a user-friendly error message
-            //         alert("An error occurred during form submission. Please try again later.");
-            //     });
-            // });
-
-            // Submit the form programmatically
-            form.submit();
-
-            // Clean up: Remove the form from the document after submission
-            document.body.removeChild(form);
-
-            console.log('Form submitted successfully (using virtual form)!');
-        }
-
         const submitForm = async () => {
             const result = await v$.value.$validate();
             debugger;
@@ -139,7 +76,6 @@ createApp({
                     console.error('Error submitting form:', error);
                     alert('An error occurred while submitting the form.');
                 }
-                // submitViaFormElm()
             }
         };
 
