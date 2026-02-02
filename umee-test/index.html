@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umee test</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="/assets/css/umee_test.css">
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+  <div id="app" class="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
+    <transition name="fade" mode="out-in">
+      <div v-if="step === 1" key="step1">
+        <h2 class="text-2xl font-semibold mb-4">Welcome to the Survey!</h2>
+        <p class="mb-4">Please provide your basic information to get started.</p>
+        <div class="mb-4">
+          <label for="name" class="block text-gray-700 text-sm font-bold mb-2 required">Name:</label>
+          <input type="text" id="name" v-model="formData.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @blur="v$.name.$touch()" @input="v$.name.$touch()">
+          <p v-if="v$.name.$error" class="text-red-500 text-xs italic">
+            <span v-if="v$.name.required.$invalid">Name is required.</span>
+            <span v-if="v$.name.minLength.$invalid">Name must be at least 3 characters.</span>
+          </p>
+        </div>
+        <div class="mb-6">
+          <label for="email" class="block text-gray-700 text-sm font-bold mb-2 required">Email:</label>
+          <input type="email" id="email" v-model="formData.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @blur="v$.email.$touch()" @input="v$.email.$touch()">
+          <p v-if="v$.email.$error" class="text-red-500 text-xs italic">
+            <span v-if="v$.email.required.$invalid">Email is required.</span>
+            <span v-if="v$.email.email.$invalid">Invalid email address.</span>
+          </p>
+        </div>
+        <button @click="nextStep" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Next</button>
+      </div>
+
+      <div v-if="step === 2" key="step2">
+        <h2 class="text-2xl font-semibold mb-4">Survey Questions</h2>
+        <div class="mb-4">
+          <label for="question1" class="block text-gray-700 text-sm font-bold mb-2 required">Question 1: What is your favorite color?</label>
+          <textarea id="question1" v-model="formData.question1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @blur="v$.question1.$touch()" @input="v$.question1.$touch()"></textarea>
+          <p v-if="v$.question1.$error" class="text-red-500 text-xs italic">
+            <span v-if="v$.question1.required.$invalid">This question is required.</span>
+            <span v-if="v$.question1.minLength.$invalid">This question requires at least 5 characters.</span>
+          </p>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2 required">Question 2: Choose your favorite option:</label>
+            <div class="flex items-center mb-2">
+                <input type="radio" id="option1" value="Option 1" v-model="formData.question2" class="mr-2 leading-tight" @blur="v$.question2.$touch()">
+                <label for="option1" class="text-sm text-gray-700">Option 1</label>
+            </div>
+            <div class="flex items-center mb-2">
+                <input type="radio" id="option2" value="Option 2" v-model="formData.question2" class="mr-2 leading-tight">
+                <label for="option2" class="text-sm text-gray-700">Option 2</label>
+            </div>
+            <p v-if="v$.question2.$error" class="text-red-500 text-xs italic">
+                <span v-if="v$.question2.required.$invalid">Please select an option.</span>
+            </p>
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Question 3: Select all that apply:</label>
+          <div class="flex items-center mb-2">
+            <input type="checkbox" id="choice1" value="Choice 1" v-model="formData.question3" class="mr-2 leading-tight">
+            <label for="choice1" class="text-sm text-gray-700">Choice 1</label>
+          </div>
+          <div class="flex items-center mb-2">
+            <input type="checkbox" id="choice2" value="Choice 2" v-model="formData.question3" class="mr-2 leading-tight">
+            <label for="choice2" class="text-sm text-gray-700">Choice 2</label>
+          </div>
+        </div>
+        <button @click="prevStep" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Previous</button>
+        <button @click="submitForm" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+      </div>
+
+      <div v-if="step === 3" key="step3">
+        <h2 class="text-2xl font-semibold mb-4">Thank You!</h2>
+        <p>Your response has been collected. Thank you for participating in the survey!</p>
+      </div>
+    </transition>
+  </div>
+
+
+
+
+
+<script src="/assets/js/umee_test.js"></script>    
+<script src="https://cdn.jsdelivr.net/npm/vue-demi"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vuelidate/core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@vuelidate/validators"></script>
+</body>
+</html>

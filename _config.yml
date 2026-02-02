@@ -2,9 +2,11 @@
 title: bloomingseed
 name: bloomingseed
 description: mathematicians save the world!
-domain: "bloomingseed.github.io"
+# domain: "bloomingseed.github.io"
+domain: "127.0.0.1"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://bloomingseed.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+# url: "https://bloomingseed.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://127.0.0.1:4000" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 markdown: kramdown
