@@ -16,6 +16,7 @@ createApp({
             question2: '',
             question3: []
         });
+        const rowNumber = ref(-1);    // store the submitted row result
 
         const rules = computed(() => ({
             name: { required, minLength: minLength(3) },
@@ -33,7 +34,7 @@ createApp({
 
         const nextStep = async () => {
             const result = await v$.value.$validate();
-            console.log('Step1  validation result: ', result)   // DEBUG
+            console.log('validation result: ', result)   // DEBUG
             if (result) {
              step.value++;
             }
@@ -56,18 +57,13 @@ createApp({
                         },
                         body: JSON.stringify(formData.value)
                     });
-                    console.log(await response.json())
 
                     if (response.ok) {
                         console.log('Form submitted successfully!');
-                        // Optionally reset the form
-                        formData.value = {
-                            name: '',
-                            email: '',
-                            question1: '',
-                            question2: '',
-                            question3: []
-                        };
+                        resp = await response.json();
+                        console.log(resp); // DEBUG
+                        rowNumber.value = resp.row;
+                        nextStep();
                     } else {
                         console.error('Form submission failed:', response.status, response.statusText);
                         alert('Form submission failed.');
@@ -83,6 +79,7 @@ createApp({
             step,
             formData,
             v$,
+            rowNumber,
             nextStep,
             prevStep,
             submitForm,
