@@ -4,7 +4,7 @@ const { createApp, ref, computed } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
-const POST_URL = "https://script.google.com/macros/s/AKfycbxAwRbJbJW6AI8_1oU9QewuMuTVhBilFcy_934fDiSUCSdajc1GFjHwd5-SPWHfW99nkA/exec";
+const POST_URL = "https://script.google.com/macros/s/AKfycbzXj0ENb3pMrd-mT_sUryxeXL5gD4drczlyN4g1M-vbxBjFTB-2jVk5II_TjExV4gjsIQ/exec";
 
 createApp({
     setup() {
@@ -52,11 +52,11 @@ createApp({
                     const response = await fetch(POST_URL, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json', // Or 'multipart/form-data' if needed
+                            'Content-Type': 'text/plain',
                         },
-                        mode: "no-cors",
-                        body: JSON.stringify(formData.value) // Or use FormData if you need multipart
+                        body: JSON.stringify(formData.value)
                     });
+                    console.log(await response.json())
 
                     if (response.ok) {
                         console.log('Form submitted successfully!');
