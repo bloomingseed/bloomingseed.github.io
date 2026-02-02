@@ -3,8 +3,14 @@
 
 ## TODO
 
-- add a waiting screen modal when clicking submit and close it when received response
+- remove "modify previous submission" so it doens't mess with time taken to finish survey measurement.
+- add confirmation before submission
 
 - reduce all question components into a single one.
 - ability to config questions from javascript or config file and load it up without touching the html (the html is then generated from js instead)
+- only allow 1 audio to be played at a time (use singleton pattern for existing audio player and its isPlaying state)
+
+- use github build automation to inject POST_URL
 - Add red border to invalid inputs
+
+- detect existing data in the session even if haven't submitted so we can track the timer more accurately? -- maybe not, since the users are expected to finish in one go.

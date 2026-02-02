@@ -20,6 +20,7 @@ const app = createApp({
             }
 
             const audio = audioMap[key]
+            debugger;
             if (!audio) return
 
             audio.currentTime = 0 // replay from start
@@ -35,6 +36,8 @@ const app = createApp({
             question3: [],
             question4: '',
             question5: '',
+            beginTimestamp: '',
+            submissionTimestamp: '',
         });
         const rowNumber = ref(-1);    // store the submitted row result
         const isSubmitting = ref(false)
@@ -67,10 +70,6 @@ const app = createApp({
 
         const v$ = useVuelidate(rules, formData);
 
-        const nextStep = async () => {
-            step.value++;
-        };
-
         const validateNextStep = async () => {
             const result = await v$.value.$validate();
             if (result) {
@@ -84,6 +83,7 @@ const app = createApp({
 
         const startNewSubmission = () => {
           // Clear existing data
+          sessionStorage.removeItem('formData');
           formData.value = {
             name: '',
             email: '',
@@ -91,17 +91,25 @@ const app = createApp({
             question2: '',
             question3: [],
             question4: '',
+            beginTimestamp: Date.now(), // record time begin the survey
+            submissionTimestamp: '',
           };
-          sessionStorage.removeItem('formData');
-          rowNumber.value = 0;
           sessionStorage.removeItem('rowNumber');
+          rowNumber.value = 0;
           step.value++;
+        };
+
+        // TODO: remove this
+        const continueSubmission = () => {
+            // beginTimestamp = Date.now();   // record the time begin the survey
+            step.value++;
         };
 
         const submitForm = async () => {
             const result = await v$.value.$validate();
             if (result) {
-                console.log('Form Data:', formData.value);
+                console.log('Form Data:', formData.value); // DEBUG
+                formData.value.submissionTimestamp = Date.now();
                 isSubmitting.value = true;
                 try {
                     const response = await fetch(POST_URL, {
@@ -117,7 +125,7 @@ const app = createApp({
                         resp = await response.json();
                         rowNumber.value = resp.row;
                         sessionStorage.setItem('rowNumber', rowNumber.value.toString()); // Persist rowNumber
-                        nextStep();
+                        step.value++;
                     } else {
                         console.error('Form submission failed:', response.status, response.statusText);
                         alert('Form submission failed.');
@@ -149,10 +157,10 @@ const app = createApp({
             v$,
             rowNumber,
             isSubmitting,
-            nextStep,
             validateNextStep,
             prevStep,
             startNewSubmission,
+            continueSubmission,
             submitForm,
         };
     },
