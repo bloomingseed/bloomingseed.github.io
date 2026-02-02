@@ -8,7 +8,7 @@ const POST_URL = "https://script.google.com/macros/s/AKfycbzXj0ENb3pMrd-mT_sUryx
 
 createApp({
     setup() {
-        const step = ref(1);
+        const step = ref(0);
         const formData = ref({
             name: '',
             email: '',
@@ -50,6 +50,21 @@ createApp({
 
         const prevStep = () => {
             step.value--;
+        };
+
+        const startNewSubmission = () => {
+          // Clear existing data
+          formData.value = {
+            name: '',
+            email: '',
+            question1: '',
+            question2: '',
+            question3: []
+          };
+          sessionStorage.removeItem('formData');
+          rowNumber.value = 0;
+          sessionStorage.removeItem('rowNumber');
+          step.value++;
         };
 
         const submitForm = async () => {
@@ -100,6 +115,7 @@ createApp({
             rowNumber,
             nextStep,
             prevStep,
+            startNewSubmission,
             submitForm,
         };
     },
