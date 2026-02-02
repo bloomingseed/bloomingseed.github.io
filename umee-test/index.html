@@ -9,8 +9,9 @@
     
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-  <div id="app" class="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
+<body class="bg-gray-100 flex justify-center md:my-6">
+  <!-- <div id="app" class="min-w-320 max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md"> -->
+  <div id="app" class="w-full max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md">
     <transition name="fade" mode="out-in">
       <div v-if="step === 0" key="step0">
         <h1 class="text-3xl font-semibold mb-4">Umee test survey</h1>
@@ -24,9 +25,16 @@
           alsdkjflakjsdflkjasldjf
         </p>
 
-        <button v-if="rowNumber !== -1" @click="startNewSubmission" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Start New Submission</button>
-        <button v-if="rowNumber !== -1" @click="nextStep" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Modify Previous Submission</button>
-        <button v-else @click="nextStep" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Start Survey</button>
+        <div class="flex justify-center">
+          <button v-if="rowNumber !== -1" @click="startNewSubmission" 
+            class="bg-white text-gray-700 font-semibold py-4 px-6 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50 transition-colors duration-200 mr-2"
+          >Start New Submission</button>
+          <button v-if="rowNumber !== -1" @click="nextStep" 
+            class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200"
+          >Modify Previous Submission</button>
+          <button v-else @click="nextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200"
+          >Start Survey</button>
+        </div>
       </div>
 
       <div v-if="step === 1" key="step1">
@@ -48,7 +56,10 @@
             <span v-if="v$.email.email.$invalid">Invalid email address.</span>
           </p>
         </div>
-        <button @click="validateNextStep" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Next</button>
+        
+        <div class="flex justify-center mt-4">
+          <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
+        </div>
       </div>
 
       <div v-if="step === 2" key="step2">
@@ -86,8 +97,53 @@
             <label for="choice2" class="text-sm text-gray-700">Choice 2</label>
           </div>
         </div>
-        <button @click="prevStep" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2">Previous</button>
-        <button @click="submitForm" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+
+        <!-- Question 4: Listening Question -->
+        <!-- <listening-question
+          label="Question 4: Listen and answer"
+          audio-src="/assets/mp3/listening1.mp3"
+          v-model="formData.question4"
+          @blur="v$.question4.$touch()"
+        >
+          <template #error>
+            <p v-if="v$.question4.$error" class="text-red-500 text-xs italic">
+              This question is required.
+            </p>
+          </template>
+        </listening-question> -->
+        <listening-question
+          label="Question 4: Listen and answer"
+          audio-src="/assets/mp3/listening1.mp3"
+          v-model="formData.question4"
+          @blur="v$.question4.$touch()"
+        >
+          <template #error>
+            <p v-if="v$.question4.$error" class="text-red-500 text-xs italic">
+              This question is required.
+            </p>
+          </template>
+        </listening-question>
+
+        <!-- Question 5: Image question-->
+         <image-question
+            image-src="/assets/images/shoes-comparision.jpg"
+            label="Describe what you see in this image"
+            v-model="formData.question5"
+            @blur="v$.question5.$touch()"
+         >
+          <template #error>
+            <p v-if="v$.question5.$error" class="text-red-500 text-xs italic">
+                <span v-if="v$.question5.required.$invalid">Please select an option.</span>
+            </p>
+          </template>
+          
+         </image-question>
+         
+         
+        <div class="flex justify-center mt-4">
+          <button @click="prevStep" class="bg-white text-gray-700 font-semibold py-4 px-6 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50 transition-colors duration-200 mr-2">Previous</button>
+          <button @click="submitForm" class="bg-white text-green-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Submit</button>
+        </div>
       </div>
 
       <div v-if="step === 3" key="step3">
@@ -96,6 +152,16 @@
         <p>Submitted row #{{rowNumber}}</p>
       </div>
     </transition>
+    <!-- Waiting Modal -->
+    <transition name="modal-fade">
+      <div v-if="isSubmitting" class="modal-backdrop">
+        <div class="modal-box">
+          <div class="spinner"></div>
+          <p class="modal-text">Submitting your answers…</p>
+        </div>
+      </div>
+    </transition>
+
   </div>
 
 
@@ -106,5 +172,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue-demi"></script>
 <script src="https://cdn.jsdelivr.net/npm/@vuelidate/core"></script>
 <script src="https://cdn.jsdelivr.net/npm/@vuelidate/validators"></script>
+<script src="/assets/js/listening_question.js"></script>
+<script src="/assets/js/image_question.js"></script>
 </body>
 </html>

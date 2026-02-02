@@ -1,22 +1,43 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-const { createApp, ref, computed, watch } = Vue
+const { createApp, ref, computed, watch, onMounted  } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
 const POST_URL = "https://script.google.com/macros/s/AKfycbzXj0ENb3pMrd-mT_sUryxeXL5gD4drczlyN4g1M-vbxBjFTB-2jVk5II_TjExV4gjsIQ/exec";
 
-createApp({
+const app = createApp({
     setup() {
+        const audioQ4 = ref(null)
+
+        const audioSources = {
+            q4: '/assets/mp3/listening1.mp3'
+        }
+
+        const playAudio = (key) => {
+            const audioMap = {
+                q4: audioQ4.value
+            }
+
+            const audio = audioMap[key]
+            if (!audio) return
+
+            audio.currentTime = 0 // replay from start
+            audio.play()
+        }
+
         const step = ref(0);
         const formData = ref({
             name: '',
             email: '',
             question1: '',
             question2: '',
-            question3: []
+            question3: [],
+            question4: '',
+            question5: '',
         });
         const rowNumber = ref(-1);    // store the submitted row result
+        const isSubmitting = ref(false)
 
         // Load data from session storage on component initialization
         if (sessionStorage.getItem('formData')) {
@@ -35,6 +56,12 @@ createApp({
             question2: step.value === 1
                 ? {}
                 : { required },
+            question4:  step.value === 1
+                ? {}
+                : { required },
+            question5:  step.value === 1
+                ? {}
+                : { required },
         }));
 
 
@@ -46,7 +73,6 @@ createApp({
 
         const validateNextStep = async () => {
             const result = await v$.value.$validate();
-            console.log('validation result: ', result)   // DEBUG
             if (result) {
              step.value++;
             }
@@ -63,7 +89,8 @@ createApp({
             email: '',
             question1: '',
             question2: '',
-            question3: []
+            question3: [],
+            question4: '',
           };
           sessionStorage.removeItem('formData');
           rowNumber.value = 0;
@@ -73,9 +100,9 @@ createApp({
 
         const submitForm = async () => {
             const result = await v$.value.$validate();
-            debugger;
             if (result) {
                 console.log('Form Data:', formData.value);
+                isSubmitting.value = true;
                 try {
                     const response = await fetch(POST_URL, {
                         method: 'POST',
@@ -88,7 +115,6 @@ createApp({
                     if (response.ok) {
                         console.log('Form submitted successfully!');
                         resp = await response.json();
-                        console.log(resp); // DEBUG
                         rowNumber.value = resp.row;
                         sessionStorage.setItem('rowNumber', rowNumber.value.toString()); // Persist rowNumber
                         nextStep();
@@ -99,6 +125,8 @@ createApp({
                 } catch (error) {
                     console.error('Error submitting form:', error);
                     alert('An error occurred while submitting the form.');
+                } finally {
+                    isSubmitting.value = false;
                 }
             }
         };
@@ -113,10 +141,14 @@ createApp({
         );
 
         return {
+            audioQ4,
+            audioSources,
+            playAudio,
             step,
             formData,
             v$,
             rowNumber,
+            isSubmitting,
             nextStep,
             validateNextStep,
             prevStep,
@@ -124,6 +156,10 @@ createApp({
             submitForm,
         };
     },
-}).mount('#app')
+})
+
+app.component('ListeningQuestion', ListeningQuestion) // registering components
+app.component('ImageQuestion', ImageQuestion) // registering components
+app.mount('#app')
 
 })
