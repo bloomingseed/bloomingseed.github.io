@@ -41,6 +41,10 @@ createApp({
         const v$ = useVuelidate(rules, formData);
 
         const nextStep = async () => {
+            step.value++;
+        };
+
+        const validateNextStep = async () => {
             const result = await v$.value.$validate();
             console.log('validation result: ', result)   // DEBUG
             if (result) {
@@ -114,6 +118,7 @@ createApp({
             v$,
             rowNumber,
             nextStep,
+            validateNextStep,
             prevStep,
             startNewSubmission,
             submitForm,
