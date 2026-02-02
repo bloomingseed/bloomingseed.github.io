@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-const { createApp, ref, computed } = Vue
+const { createApp, ref, computed, watch } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
@@ -17,6 +17,14 @@ createApp({
             question3: []
         });
         const rowNumber = ref(-1);    // store the submitted row result
+
+        // Load data from session storage on component initialization
+        if (sessionStorage.getItem('formData')) {
+            formData.value = JSON.parse(sessionStorage.getItem('formData'));
+        }
+        if (sessionStorage.getItem('rowNumber')) {
+            rowNumber.value = parseInt(sessionStorage.getItem('rowNumber'));
+        }
 
         const rules = computed(() => ({
             name: { required, minLength: minLength(3) },
@@ -63,6 +71,7 @@ createApp({
                         resp = await response.json();
                         console.log(resp); // DEBUG
                         rowNumber.value = resp.row;
+                        sessionStorage.setItem('rowNumber', rowNumber.value.toString()); // Persist rowNumber
                         nextStep();
                     } else {
                         console.error('Form submission failed:', response.status, response.statusText);
@@ -74,6 +83,15 @@ createApp({
                 }
             }
         };
+
+        // Watch formData for changes and persist to session storage
+        watch(
+            formData,
+            (newFormData) => {
+                sessionStorage.setItem('formData', JSON.stringify(newFormData));
+            },
+            { deep: true } // Deep watch for nested objects/arrays
+        );
 
         return {
             step,
