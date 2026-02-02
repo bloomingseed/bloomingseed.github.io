@@ -16,9 +16,10 @@
       <div v-if="step === 0" key="step0">
         <h1 class="text-3xl font-semibold mb-4">Umee test survey</h1>
         <h2 class="text-2xl font-semibold mb-4">Welcome!</h2>
-        <p v-if="rowNumber !== -1" class="mb-4">
-          You have previously submitted a response (Row #{{ rowNumber }}).
-        </p>
+        <div v-if="rowNumber !== -1" class="bg-yellow-100 text-yellow-700 border-l-4 border-yellow-500 p-4 mb-4 rounded" role="alert">
+          <p class="font-bold">Notice</p>
+          <p>You have previously submitted a response (Row #{{ rowNumber }}). You can still start a new submission if you want.</p>
+      </div>
         <p class="mb-4">
           Welcome to the survey!
           This is a test survey blakjsdlfkjalskdjflajsdlf
@@ -27,11 +28,8 @@
 
         <div class="flex justify-center">
           <button v-if="rowNumber !== -1" @click="startNewSubmission" 
-            class="bg-white text-gray-700 font-semibold py-4 px-6 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-opacity-50 transition-colors duration-200 mr-2"
-          >Start New Submission</button>
-          <button v-if="rowNumber !== -1" @click="continueSubmission" 
             class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200"
-          >Modify Previous Submission</button>
+          >Start New Submission</button>
           <button v-else @click="startNewSubmission" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200"
           >Start Survey</button>
         </div>

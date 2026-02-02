@@ -3,8 +3,8 @@
 
 ## TODO
 
-- remove "modify previous submission" so it doens't mess with time taken to finish survey measurement.
 - add confirmation before submission
+- check why the audio sometimes fails to be played
 
 - reduce all question components into a single one.
 - ability to config questions from javascript or config file and load it up without touching the html (the html is then generated from js instead)

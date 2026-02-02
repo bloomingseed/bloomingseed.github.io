@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-const { createApp, ref, computed, watch, onMounted  } = Vue
+const { createApp, ref, computed } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
@@ -43,9 +43,6 @@ const app = createApp({
         const isSubmitting = ref(false)
 
         // Load data from session storage on component initialization
-        if (sessionStorage.getItem('formData')) {
-            formData.value = JSON.parse(sessionStorage.getItem('formData'));
-        }
         if (sessionStorage.getItem('rowNumber')) {
             rowNumber.value = parseInt(sessionStorage.getItem('rowNumber'));
         }
@@ -82,8 +79,6 @@ const app = createApp({
         };
 
         const startNewSubmission = () => {
-          // Clear existing data
-          sessionStorage.removeItem('formData');
           formData.value = {
             name: '',
             email: '',
@@ -94,15 +89,10 @@ const app = createApp({
             beginTimestamp: Date.now(), // record time begin the survey
             submissionTimestamp: '',
           };
+          // Clear existing data
           sessionStorage.removeItem('rowNumber');
           rowNumber.value = 0;
           step.value++;
-        };
-
-        // TODO: remove this
-        const continueSubmission = () => {
-            // beginTimestamp = Date.now();   // record the time begin the survey
-            step.value++;
         };
 
         const submitForm = async () => {
@@ -139,15 +129,6 @@ const app = createApp({
             }
         };
 
-        // Watch formData for changes and persist to session storage
-        watch(
-            formData,
-            (newFormData) => {
-                sessionStorage.setItem('formData', JSON.stringify(newFormData));
-            },
-            { deep: true } // Deep watch for nested objects/arrays
-        );
-
         return {
             audioQ4,
             audioSources,
@@ -160,7 +141,6 @@ const app = createApp({
             validateNextStep,
             prevStep,
             startNewSubmission,
-            continueSubmission,
             submitForm,
         };
     },
