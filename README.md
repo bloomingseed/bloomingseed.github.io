@@ -14,3 +14,14 @@
 - Add red border to invalid inputs
 
 - detect existing data in the session even if haven't submitted so we can track the timer more accurately? -- maybe not, since the users are expected to finish in one go.
+
+## Portfolio TODO
+
+
+- Write up my experience
+- Write up my education
+- Write up my projects (!important)
+
+- Add contact info on WeChat
+
+- Add slideshow of some images that i like in the intro secetion
