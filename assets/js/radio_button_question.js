@@ -30,10 +30,6 @@ const RadioButtonQuestion = {
     audioState: {                // ✅ NEW
       type: Object,
       required: true
-    },
-    questionsCount: {                // ✅ NEW
-      type: Number,
-      required: true
     }
   },
 
@@ -45,9 +41,6 @@ const RadioButtonQuestion = {
     },
     state() {
       return this.audioState[this.audioKey]
-    },
-    questionNumber() {
-      return this.questionsCount[this.label]
     },
     countdownText() {
       return this.state?.timeLeft === 0
@@ -64,10 +57,6 @@ const RadioButtonQuestion = {
         audioProgress: 0,
         timer: null
       }
-    }
-    if (!this.questionsCount[this.label]) {
-      this.questionsCount[this.label] = this.questionsCount.total + 1;
-      this.questionsCount.total++;
     }
   },
 
@@ -128,7 +117,7 @@ const RadioButtonQuestion = {
     <div class="qblock mb-4">
 
       <label class="block text-gray-700 font-bold mb-2 required qtitle">
-        <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
+        {{ label }}
       </label>
       <!-- AUDIO SECTION (only if audioSrc exists) -->
       <template v-if="audioSrc">

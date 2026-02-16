@@ -10,7 +10,7 @@ const RatingQuestion = {
   template: `
     <div class="qblock mb-4">
       <label class="block text-gray-700 font-bold mb-3 required qtitle">
-        <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
+        {{ label }}
       </label>
       <div class="flex justify-center items-center sm:gap-2 select-none">
         <span
@@ -39,27 +39,12 @@ const RatingQuestion = {
       type: Object,
       default: () => ({ $error: false, required: { $invalid: false } })
     },
-    questionsCount: {
-      type: Object,
-      required: true
-    },
     min: { type: Number, default: 1 },
     max: { type: Number, default: 5 },
     icon: { type: String, default: "star" },
     size: { type: Number, default: 24 }
   },
   emits: ["update:modelValue"],
-  computed: {
-    questionNumber() {
-      return this.questionsCount[this.label]
-    },
-  },
-  mounted() {
-    if (!this.questionsCount[this.label]) {
-      this.questionsCount[this.label] = this.questionsCount.total + 1;
-      this.questionsCount.total++;
-    }
-  },
   setup(props, { emit }) {
     const hoverValue = ref(null)
 
@@ -131,12 +116,12 @@ const app = createApp({
         }
 
         const rules = computed(() => ({
-            'Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
-            'Giới tính của bạn:': {required},
-            'Bạn là người vùng miền nào?': {required},
-            'Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
-            'STT khảo sát của bạn/ 您的被试偏号:': {required},
-            'Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
+            'Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
+            'Q2. Giới tính của bạn:': {required},
+            'Q3. Bạn là người vùng miền nào?': {required},
+            'Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
+            'Q5. STT khảo sát của bạn/ 您的被试偏号:': {required},
+            'Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
             // myRating:  { required },
         }));
 

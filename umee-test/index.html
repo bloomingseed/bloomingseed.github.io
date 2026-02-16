@@ -44,68 +44,62 @@
           <hr class="mb-6"/>
 
           <radio-button-question
-            label="Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
+            label="Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
             :options="[{ value: 'Có' }, { value: 'Không' }]"
-            v-model="formData['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
-            :validation="v$['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
-            @blur="v$['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?'].$touch()"
+            v-model="formData['Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
+            :validation="v$['Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
+            @blur="v$['Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?'].$touch()"
             :audio-state="audioStates.step1"
-            :questions-count="questionsCount.step1"
           ></radio-button-question>
 
           <radio-button-question
-            label="Giới tính của bạn:"
+            label="Q2. Giới tính của bạn:"
             :options="[{ value: 'Nam' }, { value: 'Nữ' }, { value: 'Khác' }]"
-            v-model="formData['Giới tính của bạn:']"
-            :validation="v$['Giới tính của bạn:']"
-            @blur="v$['Giới tính của bạn:'].$touch()"
+            v-model="formData['Q2. Giới tính của bạn:']"
+            :validation="v$['Q2. Giới tính của bạn:']"
+            @blur="v$['Q2. Giới tính của bạn:'].$touch()"
             :audio-state="audioStates.step1"
-            :questions-count="questionsCount.step1"
           ></radio-button-question>
 
           <radio-button-question
-            label="Bạn là người vùng miền nào?"
+            label="Q3. Bạn là người vùng miền nào?"
             :options="[{ value: 'Bắc Trung Bộ'},
             { value: 'Nam Trung Bộ'},
             { value: 'Đông Nam Bộ'},
             { value: 'Tây Nam Bộ'},]"
-            v-model="formData['Bạn là người vùng miền nào?']"
-            :validation="v$['Bạn là người vùng miền nào?']"
-            @blur="v$['Bạn là người vùng miền nào?'].$touch()"
+            v-model="formData['Q3. Bạn là người vùng miền nào?']"
+            :validation="v$['Q3. Bạn là người vùng miền nào?']"
+            @blur="v$['Q3. Bạn là người vùng miền nào?'].$touch()"
             :audio-state="audioStates.step1"
-            :questions-count="questionsCount.step1"
           ></radio-button-question>
           
           <text-input-question
-            label="Mã số tỉnh thành quê quán của bạn (VD: 92 CT)"
+            label="Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)"
             id="name"
-            v-model="formData['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
-            :validation="v$['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
+            v-model="formData['Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
+            :validation="v$['Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
             :audio-state="audioStates.step1"
-            :questions-count="questionsCount.step1"
           ></text-input-question>
           
           <text-input-question
-            label="STT khảo sát của bạn/ 您的被试偏号:"
+            label="Q5. STT khảo sát của bạn/ 您的被试偏号:"
             id="t1q6"
-            v-model="formData['STT khảo sát của bạn/ 您的被试偏号:']"
-            :validation="v$['STT khảo sát của bạn/ 您的被试偏号:']"
+            v-model="formData['Q5. STT khảo sát của bạn/ 您的被试偏号:']"
+            :validation="v$['Q5. STT khảo sát của bạn/ 您的被试偏号:']"
             :audio-state="audioStates.step1"
-            :questions-count="questionsCount.step1"
           ></text-input-question>
 
 
           <!-- image question -->
           <image-radio-question
-            label="Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            label="Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
             :options="[{value: 'B', imageSrc: '/assets/images/t1q0ab.jpg'},
                        {value: 'A', imageSrc: '/assets/images/t1q0aa.jpg'}]"
-            v-model="formData['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
-            :validation="v$['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
-            @blur="v$['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            v-model="formData['Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
             audio-src="/assets/mp3/cau nghe.mp3"
             :audio-state="audioStates.step1"
-            :questions-count="questionsCount.step1"
           ></image-radio-question>
 
           <!-- <rating-question
@@ -116,7 +110,6 @@
             :max="10"
             icon="heart"
             size="32"
-            :questions-count="questionsCount.step1"
           ></rating-question> -->
           <hr>
           <div class="flex justify-center mt-6">

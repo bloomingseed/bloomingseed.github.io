@@ -28,10 +28,6 @@ const TextInputQuestion = {
       type: Number,
       default: 10
     },
-    questionsCount: {
-      type: Number,
-      default: 10
-    },
     audioState: {               // ✅ NEW
       type: Object,
       required: true
@@ -46,9 +42,6 @@ const TextInputQuestion = {
     },
     state() {
       return this.audioState[this.audioKey]
-    },
-    questionNumber() {
-      return this.questionsCount[this.label]
     },
     countdownText() {
       return this.state?.timeLeft === 0
@@ -65,10 +58,6 @@ const TextInputQuestion = {
         audioProgress: 0,
         timer: null
       }
-    }
-    if (!this.questionsCount[this.label]) {
-      this.questionsCount[this.label] = this.questionsCount.total + 1;
-      this.questionsCount.total++;
     }
   },
 
@@ -129,7 +118,7 @@ const TextInputQuestion = {
     <div class="qblock mb-4">
 
       <label :for="id" class="block text-gray-700 font-bold mb-2 required qtitle">
-        <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
+        {{ label }}
       </label>
 
       <!-- AUDIO SECTION (only if audioSrc exists) -->
