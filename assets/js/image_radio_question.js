@@ -193,7 +193,7 @@ const ImageRadioQuestion = {
 
     </div>
 
-    <p v-if="validation.$error" class="text-red-500 text-sm italic mt-2">
+    <p v-if="validation.$error" class="text-red-500 text-sm italic mt-2 text-center">
       <span v-if="validation.required.$invalid">
         Please select an option.
       </span>

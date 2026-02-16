@@ -45,39 +45,70 @@
 
           <radio-button-question
             label="Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
-            :options="radioOptions"
-            v-model="formData.question2"
-            :validation="v$.question2"
-            @blur="v$.question2.$touch()"
-            :audio-state="audioStates"
+            :options="[{ value: 'Có' }, { value: 'Không' }]"
+            v-model="formData['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
+            :validation="v$['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
+            @blur="v$['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?'].$touch()"
+            :audio-state="audioStates.step1"
+            :questions-count="questionsCount.step1"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="Giới tính của bạn:"
+            :options="[{ value: 'Nam' }, { value: 'Nữ' }, { value: 'Khác' }]"
+            v-model="formData['Giới tính của bạn:']"
+            :validation="v$['Giới tính của bạn:']"
+            @blur="v$['Giới tính của bạn:'].$touch()"
+            :audio-state="audioStates.step1"
+            :questions-count="questionsCount.step1"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="Bạn là người vùng miền nào?"
+            :options="[{ value: 'Bắc Trung Bộ'},
+            { value: 'Nam Trung Bộ'},
+            { value: 'Đông Nam Bộ'},
+            { value: 'Tây Nam Bộ'},]"
+            v-model="formData['Bạn là người vùng miền nào?']"
+            :validation="v$['Bạn là người vùng miền nào?']"
+            @blur="v$['Bạn là người vùng miền nào?'].$touch()"
+            :audio-state="audioStates.step1"
             :questions-count="questionsCount.step1"
           ></radio-button-question>
           
           <text-input-question
-            label="Name:"
-            placeholder="Điền câu trả lời ở đây"
+            label="Mã số tỉnh thành quê quán của bạn (VD: 92 CT)"
             id="name"
-            v-model="formData.name"
-            :validation="v$.name"
-            audio-src="/assets/mp3/choi 1.m4a"
-            :audio-state="audioStates"
+            v-model="formData['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
+            :validation="v$['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
+            :audio-state="audioStates.step1"
+            :questions-count="questionsCount.step1"
+          ></text-input-question>
+          
+          <text-input-question
+            label="STT khảo sát của bạn/ 您的被试偏号:"
+            id="t1q6"
+            v-model="formData['STT khảo sát của bạn/ 您的被试偏号:']"
+            :validation="v$['STT khảo sát của bạn/ 您的被试偏号:']"
+            :audio-state="audioStates.step1"
             :questions-count="questionsCount.step1"
           ></text-input-question>
 
 
           <!-- image question -->
           <image-radio-question
-            label="Choose your favorite shoe:"
-            :options="shoeOptions"
-            v-model="formData.favoriteShoe"
-            :validation="v$.favoriteShoe"
-            @blur="v$.favoriteShoe.$touch()"
-            audio-src="/assets/mp3/dia 1.m4a"
-            :audio-state="audioStates"
+            label="Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'B', imageSrc: '/assets/images/t1q0ab.jpg'},
+                       {value: 'A', imageSrc: '/assets/images/t1q0aa.jpg'}]"
+            v-model="formData['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/cau nghe.mp3"
+            :audio-state="audioStates.step1"
             :questions-count="questionsCount.step1"
           ></image-radio-question>
 
-          <rating-question
+          <!-- <rating-question
             v-model="formData.myRating"
             label="How would you rate our service?"
             :validation="v$.myRating"
@@ -86,7 +117,7 @@
             icon="heart"
             size="32"
             :questions-count="questionsCount.step1"
-          ></rating-question>
+          ></rating-question> -->
           <hr>
           <div class="flex justify-center mt-6">
             <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>

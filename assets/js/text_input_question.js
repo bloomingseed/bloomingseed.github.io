@@ -6,7 +6,7 @@ const TextInputQuestion = {
     },
     placeholder: {
       type: String,
-      default: "Enter your answer here"
+      default: "Điền câu trả lời của bạn ở đây"
     },
     id: {
       type: String,
@@ -132,60 +132,63 @@ const TextInputQuestion = {
         <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
       </label>
 
-      <!-- AUDIO -->
-      <audio
-        ref="audio"
-        :src="audioSrc"
-        @timeupdate="updateAudioProgress"
-        @ended="onAudioEnded"
-      ></audio>
+      <!-- AUDIO SECTION (only if audioSrc exists) -->
+      <template v-if="audioSrc">
+        <!-- AUDIO -->
+        <audio
+            ref="audio"
+            :src="audioSrc"
+            @timeupdate="updateAudioProgress"
+            @ended="onAudioEnded"
+        ></audio>
 
-      <!-- CONTROLS -->
-      <div class="flex justify-between gap-3 mb-3">
+        <!-- CONTROLS -->
+        <div class="flex justify-between gap-3 mb-3">
 
-        <button
-          type="button"
-          @click="play"
-          :disabled="!state || state.isPlaying || state.timeLeft === 0"
-          :class="[
-            'play-btn',
-            { 
-              locked: state?.timeLeft === 0,
-              playing: state?.isPlaying
-            }
-          ]"
-        >
-          ▶ Play
-        </button>
+            <button
+            type="button"
+            @click="play"
+            :disabled="!state || state.isPlaying || state.timeLeft === 0"
+            :class="[
+                'play-btn',
+                { 
+                locked: state?.timeLeft === 0,
+                playing: state?.isPlaying
+                }
+            ]"
+            >
+            ▶ Play
+            </button>
 
-        <div
-          class="countdown-text"
-          :class="{ expired: state?.timeLeft === 0 }"
-        >
-          {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
+            <div
+            class="countdown-text"
+            :class="{ expired: state?.timeLeft === 0 }"
+            >
+            {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
+            </div>
+
         </div>
 
-      </div>
+        <!-- AUDIO PROGRESS BAR -->
+        <div class="progress-track">
+            <div
+            class="progress-fill audio"
+            :class="{ locked: state?.timeLeft === 0 }"
+            :style="{ width: (state?.audioProgress || 0) + '%' }"
+            ></div>
+        </div>
+      </template>
 
-      <!-- AUDIO PROGRESS BAR -->
-      <div class="progress-track">
-        <div
-          class="progress-fill audio"
-          :class="{ locked: state?.timeLeft === 0 }"
-          :style="{ width: (state?.audioProgress || 0) + '%' }"
-        ></div>
-      </div>
-
-      <!-- TEXT INPUT -->
-      <input
-        type="text"
-        :placeholder="placeholder"
-        :id="id"
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
-        @blur="$emit('blur')"
-      />
+        <!-- TEXT INPUT -->
+        <input
+            type="text"
+            :placeholder="placeholder"
+            :id="id"
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
+            class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
+            @blur="$emit('blur')"
+        />
 
       <p v-if="validation.$error" class="text-red-500 text-sm italic">
         <span v-if="validation.required.$invalid">

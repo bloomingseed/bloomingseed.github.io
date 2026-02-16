@@ -27,7 +27,7 @@ const RatingQuestion = {
       </div>
 
       <!-- Error message -->
-      <p v-if="validation.$error" class="text-red-500 text-sm italic">
+      <p v-if="validation.$error" class="text-red-500 text-sm italic text-center">
         <span v-if="validation.required.$invalid">Please select an option.</span>
       </p>
     </div>
@@ -105,33 +105,17 @@ const RatingQuestion = {
 
 const app = createApp({
     setup() {
-        const step = ref(0);
+        const step = ref(1);
         const formData = ref({
-            name: '',
-            question2: '',
-            favoriteShoe: '',
-            myRating: '',
             beginTimestamp: '',
             submissionTimestamp: '',
         });
         const rowNumber = ref(-1);    // store the submitted row result
         const isSubmitting = ref(false)
-        const shoeOptions = [
-          {
-            value: 'A',
-            imageSrc: '/assets/images/t1q1a.jpg',
-          },
-          {
-            value: 'B',
-            imageSrc: '/assets/images/t1q1b.jpg',
-          }
-        ];
-
-        const radioOptions = [
-          { value: "Yes", label: "Yes" },
-          { value: "No", label: "No" }
-        ];
-        const audioStates = ref({})
+        const audioStates = ref({
+          step1: {},
+          step2: {},
+        })
         const questionsCount = ref({
           step1: {
             total: 0,
@@ -147,10 +131,13 @@ const app = createApp({
         }
 
         const rules = computed(() => ({
-            name: { required, minLength: minLength(3) },
-            favoriteShoe:  { required },
-            myRating:  { required },
-            question2: { required },
+            'Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
+            'Giới tính của bạn:': {required},
+            'Bạn là người vùng miền nào?': {required},
+            'Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
+            'STT khảo sát của bạn/ 您的被试偏号:': {required},
+            'Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
+            // myRating:  { required },
         }));
 
 
@@ -169,12 +156,6 @@ const app = createApp({
 
         const startNewSubmission = () => {
           formData.value = {
-            name: '',
-            email: '',
-            question1: '',
-            question2: '',
-            question3: [],
-            question4: '',
             beginTimestamp: Date.now(), // record time begin the survey
             submissionTimestamp: '',
           };
@@ -225,8 +206,6 @@ const app = createApp({
             v$,
             rowNumber,
             isSubmitting,
-            shoeOptions,
-            radioOptions,
             questionsCount,
             validateNextStep,
             prevStep,

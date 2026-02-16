@@ -9,6 +9,8 @@
 
 ## TODO
 
+- remove auto numbering so the formData labeling and validations work correcttly
+- use an animated icon to signal the audio is playing instead of a progress bar
 - handle typed input normalization (to lower case, remove whitespaces)
 - allow respondee to know his/her score
 - screen recording?

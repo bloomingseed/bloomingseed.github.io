@@ -196,7 +196,7 @@ const RadioButtonQuestion = {
           :for="'radio-' + option.value"
           class="text-gray-700"
         >
-          {{ option.label }}
+          {{ option.value }}
         </label>
       </div>
 
