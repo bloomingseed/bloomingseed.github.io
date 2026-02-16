@@ -26,66 +26,90 @@ const RadioButtonQuestion = {
     countdownSeconds: {
       type: Number,
       default: 10
+    },
+    audioState: {                // ✅ NEW
+      type: Object,
+      required: true
     }
   },
 
   emits: ['update:modelValue', 'blur'],
 
-  data() {
-    return {
-      isPlaying: false,
-      audioProgress: 0,
-      timeLeft: this.countdownSeconds,
-      countdownTimer: null,
-      countdownText: 'Time limit: '
+  computed: {
+    audioKey() {
+      return this.audioSrc
+    },
+    state() {
+      return this.audioState[this.audioKey]
+    },
+    countdownText() {
+      return this.state?.timeLeft === 0
+        ? 'Time expired:'
+        : 'Time left:'
+    }
+  },
+
+  mounted() {
+    if (!this.audioState[this.audioKey]) {
+      this.audioState[this.audioKey] = {
+        timeLeft: this.countdownSeconds,
+        isPlaying: false,
+        audioProgress: 0,
+        timer: null
+      }
     }
   },
 
   methods: {
     play() {
-      if (this.timeLeft === 0) return
+      if (!this.state || this.state.timeLeft === 0) return
 
-      // Start countdown only once
-      if (!this.countdownTimer) {
+      if (!this.state.timer) {
         this.startCountdown()
       }
 
-      this.isPlaying = true
-      this.audioProgress = 0
-      this.$refs.audio.currentTime = 0
-      this.$refs.audio.play()
-      this.countdownText = 'Time left: '
+      this.state.isPlaying = true
+      this.state.audioProgress = 0
+
+      const audio = this.$refs.audio
+      audio.currentTime = 0
+      audio.play()
     },
 
     updateAudioProgress() {
       const audio = this.$refs.audio
       if (!audio.duration) return
 
-      this.audioProgress =
+      this.state.audioProgress =
         (audio.currentTime / audio.duration) * 100
     },
 
     onAudioEnded() {
-      this.isPlaying = false
+      if (this.state) {
+        this.state.isPlaying = false
+      }
     },
 
     startCountdown() {
-      this.countdownTimer = setInterval(() => {
-        if (this.timeLeft > 0) {
-          this.timeLeft--
+      if (!this.state || this.state.timer) return
+
+      this.state.timer = setInterval(() => {
+        if (this.state.timeLeft > 0) {
+          this.state.timeLeft--
         }
 
-        if (this.timeLeft === 0) {
-          clearInterval(this.countdownTimer)
-          this.countdownTimer = null
+        if (this.state.timeLeft === 0) {
+          clearInterval(this.state.timer)
+          this.state.timer = null
         }
       }, 1000)
     }
   },
-
+  
   beforeUnmount() {
-    if (this.countdownTimer) {
-      clearInterval(this.countdownTimer)
+    if (this.state?.timer) {
+      clearInterval(this.state.timer)
+      this.state.timer = null
     }
   },
 
@@ -110,10 +134,13 @@ const RadioButtonQuestion = {
         <button
           type="button"
           @click="play"
-          :disabled="isPlaying || timeLeft === 0"
+          :disabled="!state || state.isPlaying || state.timeLeft === 0"
           :class="[
             'play-btn',
-            { locked: timeLeft === 0, playing: isPlaying }
+            { 
+              locked: state?.timeLeft === 0,
+              playing: state?.isPlaying
+            }
           ]"
         >
           ▶ Play
@@ -121,9 +148,9 @@ const RadioButtonQuestion = {
 
         <div
           class="countdown-text"
-          :class="{ expired: timeLeft === 0 }"
+          :class="{ expired: state?.timeLeft === 0 }"
         >
-          {{ countdownText }} {{ timeLeft }}s
+          {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
         </div>
 
       </div>
@@ -132,8 +159,8 @@ const RadioButtonQuestion = {
       <div class="progress-track">
         <div
           class="progress-fill audio"
-          :class="{ locked: timeLeft === 0 }"
-          :style="{ width: audioProgress + '%' }"
+          :class="{ locked: state?.timeLeft === 0 }"
+          :style="{ width: (state?.audioProgress || 0) + '%' }"
         ></div>
       </div>
 

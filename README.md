@@ -1,19 +1,35 @@
 ## bloomingseed.github.io
 - A portfolio page where I put self description and products I created/contributed.
 
+## Tasks planning for v1.0-alpha
+
+- Reformat the form
+
+
+
 ## TODO
 
-- add confirmation before submission
-- check why the audio sometimes fails to be played
+- handle typed input normalization (to lower case, remove whitespaces)
+- allow respondee to know his/her score
+- screen recording?
 
-- reduce all question components into a single one.
+
+
+
+- add confirmation before submission
+
 - ability to config questions from javascript or config file and load it up without touching the html (the html is then generated from js instead)
 - only allow 1 audio to be played at a time (use singleton pattern for existing audio player and its isPlaying state)
 
 - use github build automation to inject POST_URL
 - Add red border to invalid inputs
 
-- detect existing data in the session even if haven't submitted so we can track the timer more accurately? -- maybe not, since the users are expected to finish in one go.
+
+
+
+
+
+
 
 ## Portfolio TODO
 

@@ -110,7 +110,7 @@ const app = createApp({
             audio.play()
         }
 
-        const step = ref(1);
+        const step = ref(0);
         const formData = ref({
             name: '',
             question2: '',
@@ -136,6 +136,7 @@ const app = createApp({
           { value: "Yes", label: "Yes" },
           { value: "No", label: "No" }
         ];
+        const audioStates = ref({})
 
         // Load data from session storage on component initialization
         if (sessionStorage.getItem('rowNumber')) {
@@ -218,6 +219,7 @@ const app = createApp({
             audioQ4,
             audioSources,
             playAudio,
+            audioStates,
             step,
             formData,
             v$,
