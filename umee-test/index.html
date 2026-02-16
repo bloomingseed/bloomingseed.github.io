@@ -343,8 +343,425 @@
             <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
           </div>
         </div>
-
+        
         <div v-else-if="step === 2">
+          <h2 class="text-2xl font-semibold">Survey#1 Questions</h2>
+          <p class="mb-2 text-red-500">Mục có dấu * màu đỏ là thông tin bắt buộc.</p>
+          <hr class="mb-6"/>
+
+          <radio-button-question
+            label="1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'đổ'}, { value: 'đỗ'}]"
+            v-model="formData2['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/đo1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'rẻ'}, { value: 'rẽ'}]"
+            v-model="formData2['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/re 2.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'nội'}, { value: 'nổi'}]"
+            v-model="formData2['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/noi b2.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="5. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'sẻ'}, { value: 'sẽ'}]"
+            v-model="formData2['5. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['5. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['5. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/se1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'dỉa'}, { value: 'dĩa'}]"
+            v-model="formData2['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/dia 1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'khoẻ'}, { value: 'phẻ'}]"
+            v-model="formData2['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/khoe 1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'nổi'}, { value: 'nội'}]"
+            v-model="formData2['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/noi c1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'vả'}, { value: 'vã'}]"
+            v-model="formData2['9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/va 2.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'chửa'}, { value: 'chửa'}]"
+            v-model="formData2['10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/chua 1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'dỗ'}, { value: 'dổ'}]"
+            v-model="formData2['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/do c2.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'đổ'}, { value: 'đỗ'}]"
+            v-model="formData2['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/đo 2.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'chổi'}, { value: 'chồi'}]"
+            v-model="formData2['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/choi 1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'rẻ'}, { value: 'rẽ'}]"
+            v-model="formData2['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/re 1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="15. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'vả'}, { value: 'vã'}]"
+            v-model="formData2['15. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v2$['15. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v2$['15. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/va 1.m4a"
+            :audio-state="audioStates.step2"
+          ></radio-button-question>
+          
+          <hr>
+          <div class="flex justify-center mt-6">
+            <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
+          </div>
+        </div>
+
+        
+        <div v-else-if="step === 3">
+          <h2 class="text-2xl font-semibold">Survey#1 Questions</h2>
+          <p class="mb-2 text-red-500">Mục có dấu * màu đỏ là thông tin bắt buộc.</p>
+          <hr class="mb-6"/>
+
+          <radio-button-question
+            label="1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'mủ'}, { value: 'mũ'}]"
+            v-model="formData3['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 4/mu 1.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'vỏ'}, { value: 'võ'}]"
+            v-model="formData3['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 1/vo 2.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'tả'}, { value: 'tã'}]"
+            v-model="formData3['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 8/ta 2.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'rổ'}, { value: 'gỗ'}]"
+            v-model="formData3['4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 5/ro 1.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          
+          <text-input-question
+            label="5. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây"
+            id="t3q5"
+            v-model="formData3['5. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            :validation="v3$['5. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            @blur="v3$['5. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây'].$touch()"
+            audio-src="/assets/mp3/Stimuli 5/go 2.m4a"
+            :audio-state="audioStates.step3"
+          ></text-input-question>
+
+          <image-radio-question
+            label="6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t3q6a.jpg'},
+                       {value: 'B', imageSrc: '/assets/images/t3q6b.jpg'}]"
+            v-model="formData['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/dia 2.m4a"
+            :audio-state="audioStates.step3"
+          ></image-radio-question>
+
+          <radio-button-question
+            label="7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'chửa'}, { value: 'chữa'}]"
+            v-model="formData3['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/chua 1.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="8. Người nói vừa phát âm từ CÃI VÃ phải không?"
+            :options="[{ value: 'Sai/ 错❌'}, { value: 'Đúng/ 对'}]"
+            v-model="formData3['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/cai va.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[ {value: 'đỗ lỗi'},
+                        {value: 'đỗ lổi'},
+                        {value: 'đổ lổi'},
+                        {value: 'đổ lỗi'}]"
+            v-model="formData3['9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/do loi.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+          
+          <text-input-question
+            label="10. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây"
+            id="t3q10"
+            v-model="formData3['10. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            :validation="v3$['10. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            @blur="v3$['10. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây'].$touch()"
+            audio-src="/assets/mp3/Test 3/vo lo.m4a"
+            :audio-state="audioStates.step3"
+          ></text-input-question>
+          
+
+          <radio-button-question
+            label="11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'dỗi'}, { value: 'giỏi'}]"
+            v-model="formData3['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/doi.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="12. Người nói vừa phát âm từ GIỎI phải không?"
+            :options="[{ value: 'Đúng/ 对'}, { value: 'Sai/ 错❌'}]"
+            v-model="formData3['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/d_gioi.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{ value: 'mách lẻo'}, { value: 'mách lẽo'}]"
+            v-model="formData3['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/mach leo.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[ {value: 'chổ rẽ'},
+                        {value: 'chỗ rẽ'},
+                        {value: 'chổ rẻ'},
+                        {value: 'chỗ rẻ'}]"
+            v-model="formData3['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/cho re.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <text-input-question
+            label="15. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây"
+            id="t3q5"
+            v-model="formData3['15. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            :validation="v3$['15. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            @blur="v3$['15. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây'].$touch()"
+            audio-src="/assets/mp3/Test 3/co lo.m4a"
+            :audio-state="audioStates.step3"
+          ></text-input-question>
+
+          <radio-button-question
+            label="16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[ {value: 'đổ sữa'},
+                        {value: 'đỗ sữa'},
+                        {value: 'đổ sửa'},
+                        {value: 'đỗ sửa'}]"
+            v-model="formData3['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/do sua.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[ {value: 'kẽ hỡ'},
+                        {value: 'kẻ hỡ'},
+                        {value: 'kẽ hở'},
+                        {value: 'kẻ hở'}]"
+            v-model="formData3['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/ke ho.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[ {value: 'lỗ hỏng'},
+                        {value: 'lổ hõng'},
+                        {value: 'lỗ hõng'},
+                        {value: 'lổ hỏng'}]"
+            v-model="formData3['18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/lo hong.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <radio-button-question
+            label="19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[ {value: 'nửa mỡ'},
+                        {value: 'nữa mỡ'},
+                        {value: 'nửa mở'},
+                        {value: 'nữa mở'}]"
+            v-model="formData3['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v3$['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v3$['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Test 3/nua mo.m4a"
+            :audio-state="audioStates.step3"
+          ></radio-button-question>
+
+          <text-input-question
+            label="20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây"
+            id="t3q20"
+            v-model="formData3['20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            :validation="v3$['20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
+            @blur="v3$['20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây'].$touch()"
+            audio-src="/assets/mp3/Test 3/hang bao hiem.m4a"
+            :audio-state="audioStates.step3"
+          ></text-input-question>
+
+          
+          <rating-question
+            v-model="formData3['Đánh giá mức độ khó của bài khảo sát này:']"
+            label="Đánh giá mức độ khó của bài khảo sát này:"
+            :validation="v3$['Đánh giá mức độ khó của bài khảo sát này:']"
+            :min="1"
+            :max="5"
+            icon="star"
+            size="32"
+          ></rating-question>
+
+          <rating-question
+            v-model="formData3['Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?']"
+            label="Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?"
+            :validation="v3$['Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?']"
+            :min="1"
+            :max="10"
+            icon="heart"
+            size="32"
+          ></rating-question>
+
+          <!-- <rating-question
+            v-model="formData3['Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?']"
+            label="Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?"
+            :validation="v3$['Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?']"
+            :min="1"
+            :max="10"
+            icon="like"
+            size="32"
+          ></rating-question> -->
+          
+          
+          
+          <hr>
+          <div class="flex justify-center mt-6">
+            <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
+          </div>
+        </div>
+
+        <div v-else-if="step === 4">
           <h2 class="text-2xl font-semibold mb-4">Survey# 1 Questions</h2>
           
           
@@ -354,7 +771,7 @@
           </div>
         </div>
 
-        <div v-else-if="step === 3">
+        <div v-else-if="step === 5">
           <h2 class="text-2xl font-semibold mb-4">Thank You!</h2>
           <p>Your response has been collected. Thank you for participating in the survey!</p>
           <p>Submitted row #{{rowNumber}}</p>

@@ -9,9 +9,13 @@
 
 ## TODO
 
+- Correct the validations on test2's questions so it can move to next test
 - handle timer for each test separatedly
-- use an animated icon to signal the audio is playing instead of a progress bar
 - handle typed input normalization (to lower case, remove whitespaces)
+- save data to separate sheets
+
+- Download an icon for the survey webpage
+- use an animated icon to signal the audio is playing instead of a progress bar
 - allow respondee to know his/her score
 - screen recording?
 
