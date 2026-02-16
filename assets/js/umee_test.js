@@ -10,7 +10,7 @@ const RatingQuestion = {
   template: `
     <div class="qblock mb-4">
       <label class="block text-gray-700 font-bold mb-3 required qtitle">
-        <span class="qnumber">Q1. </span>{{ label }}
+        <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
       </label>
       <div class="flex justify-center items-center sm:gap-2 select-none">
         <span
@@ -39,12 +39,27 @@ const RatingQuestion = {
       type: Object,
       default: () => ({ $error: false, required: { $invalid: false } })
     },
+    questionsCount: {
+      type: Object,
+      required: true
+    },
     min: { type: Number, default: 1 },
     max: { type: Number, default: 5 },
     icon: { type: String, default: "star" },
     size: { type: Number, default: 24 }
   },
   emits: ["update:modelValue"],
+  computed: {
+    questionNumber() {
+      return this.questionsCount[this.label]
+    },
+  },
+  mounted() {
+    if (!this.questionsCount[this.label]) {
+      this.questionsCount[this.label] = this.questionsCount.total + 1;
+      this.questionsCount.total++;
+    }
+  },
   setup(props, { emit }) {
     const hoverValue = ref(null)
 
@@ -90,26 +105,6 @@ const RatingQuestion = {
 
 const app = createApp({
     setup() {
-        const audioQ4 = ref(null)
-
-        const audioSources = {
-            q4: '/assets/mp3/listening1.mp3',
-            // q4: 'https://drive.usercontent.google.com/download?id=1iR3wlltVx2jzafNQmTX2xINblrVK1OKY&export=download'
-        }
-
-        const playAudio = (key) => {
-            const audioMap = {
-                q4: audioQ4.value
-            }
-
-            const audio = audioMap[key]
-            // debugger;
-            if (!audio) return
-
-            audio.currentTime = 0 // replay from start
-            audio.play()
-        }
-
         const step = ref(0);
         const formData = ref({
             name: '',
@@ -137,6 +132,14 @@ const app = createApp({
           { value: "No", label: "No" }
         ];
         const audioStates = ref({})
+        const questionsCount = ref({
+          step1: {
+            total: 0,
+          },
+          step2:  {
+            total: 0,
+          },
+        })
 
         // Load data from session storage on component initialization
         if (sessionStorage.getItem('rowNumber')) {
@@ -216,9 +219,6 @@ const app = createApp({
         };
 
         return {
-            audioQ4,
-            audioSources,
-            playAudio,
             audioStates,
             step,
             formData,
@@ -227,6 +227,7 @@ const app = createApp({
             isSubmitting,
             shoeOptions,
             radioOptions,
+            questionsCount,
             validateNextStep,
             prevStep,
             startNewSubmission,

@@ -18,6 +18,10 @@ const ImageRadioQuestion = {
       type: Object,
       required: true
     },
+    questionsCount: {
+      type: Object,
+      required: true
+    },
     countdownSeconds: {
       type: Number,
       default: 10
@@ -27,7 +31,10 @@ const ImageRadioQuestion = {
   computed: {
     state() {
       return this.audioState[this.audioSrc]
-    }
+    },
+    questionNumber() {
+      return this.questionsCount[this.label]
+    },
   },
   mounted() {
     if (!this.audioState[this.audioSrc]) {
@@ -38,6 +45,10 @@ const ImageRadioQuestion = {
         countdownStarted: false,
         timer: null
       }
+    }
+    if (!this.questionsCount[this.label]) {
+      this.questionsCount[this.label] = this.questionsCount.total + 1;
+      this.questionsCount.total++;
     }
   },
 
@@ -99,7 +110,7 @@ const ImageRadioQuestion = {
     <div class="qblock mb-4">
 
     <label class="block text-gray-700 font-bold mb-3 required qtitle">
-      <span class="qnumber">Q1. </span>{{ label }}
+      <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
     </label>
 
     <!-- AUDIO -->

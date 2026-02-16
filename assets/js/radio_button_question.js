@@ -30,6 +30,10 @@ const RadioButtonQuestion = {
     audioState: {                // ✅ NEW
       type: Object,
       required: true
+    },
+    questionsCount: {                // ✅ NEW
+      type: Number,
+      required: true
     }
   },
 
@@ -41,6 +45,9 @@ const RadioButtonQuestion = {
     },
     state() {
       return this.audioState[this.audioKey]
+    },
+    questionNumber() {
+      return this.questionsCount[this.label]
     },
     countdownText() {
       return this.state?.timeLeft === 0
@@ -57,6 +64,10 @@ const RadioButtonQuestion = {
         audioProgress: 0,
         timer: null
       }
+    }
+    if (!this.questionsCount[this.label]) {
+      this.questionsCount[this.label] = this.questionsCount.total + 1;
+      this.questionsCount.total++;
     }
   },
 
@@ -117,52 +128,54 @@ const RadioButtonQuestion = {
     <div class="qblock mb-4">
 
       <label class="block text-gray-700 font-bold mb-2 required qtitle">
-        <span class="qnumber">Q1. </span>{{ label }}
+        <span class="qnumber">Q{{ questionNumber }}. </span>{{ label }}
       </label>
+      <!-- AUDIO SECTION (only if audioSrc exists) -->
+      <template v-if="audioSrc">
+        <!-- AUDIO -->
+        <audio
+            ref="audio"
+            :src="audioSrc"
+            @timeupdate="updateAudioProgress"
+            @ended="onAudioEnded"
+        ></audio>
 
-      <!-- AUDIO -->
-      <audio
-        ref="audio"
-        :src="audioSrc"
-        @timeupdate="updateAudioProgress"
-        @ended="onAudioEnded"
-      ></audio>
+        <!-- CONTROLS -->
+        <div class="flex justify-between gap-3 mb-3">
 
-      <!-- CONTROLS -->
-      <div class="flex justify-between gap-3 mb-3">
+            <button
+            type="button"
+            @click="play"
+            :disabled="!state || state.isPlaying || state.timeLeft === 0"
+            :class="[
+                'play-btn',
+                { 
+                locked: state?.timeLeft === 0,
+                playing: state?.isPlaying
+                }
+            ]"
+            >
+            ▶ Play
+            </button>
 
-        <button
-          type="button"
-          @click="play"
-          :disabled="!state || state.isPlaying || state.timeLeft === 0"
-          :class="[
-            'play-btn',
-            { 
-              locked: state?.timeLeft === 0,
-              playing: state?.isPlaying
-            }
-          ]"
-        >
-          ▶ Play
-        </button>
+            <div
+            class="countdown-text"
+            :class="{ expired: state?.timeLeft === 0 }"
+            >
+            {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
+            </div>
 
-        <div
-          class="countdown-text"
-          :class="{ expired: state?.timeLeft === 0 }"
-        >
-          {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
         </div>
 
-      </div>
-
-      <!-- AUDIO PROGRESS BAR -->
-      <div class="progress-track">
-        <div
-          class="progress-fill audio"
-          :class="{ locked: state?.timeLeft === 0 }"
-          :style="{ width: (state?.audioProgress || 0) + '%' }"
-        ></div>
-      </div>
+        <!-- AUDIO PROGRESS BAR -->
+        <div class="progress-track">
+            <div
+            class="progress-fill audio"
+            :class="{ locked: state?.timeLeft === 0 }"
+            :style="{ width: (state?.audioProgress || 0) + '%' }"
+            ></div>
+        </div>
+    </template>
 
       <!-- RADIO OPTIONS -->
       <div
