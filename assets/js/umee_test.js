@@ -1,17 +1,100 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-const { createApp, ref, computed } = Vue
+const { createApp, ref, onMounted, computed } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
 const POST_URL = "https://script.google.com/macros/s/AKfycbzXj0ENb3pMrd-mT_sUryxeXL5gD4drczlyN4g1M-vbxBjFTB-2jVk5II_TjExV4gjsIQ/exec";
+
+const RatingQuestion = {
+  template: `
+    <div class="qblock mb-4">
+      <label class="block text-gray-700 font-bold mb-3 required qtitle">
+        <span class="qnumber">Q1. </span>{{ label }}
+      </label>
+      <div class="flex justify-center items-center sm:gap-2 select-none">
+        <span
+          v-for="n in rangeArray"
+          :key="n"
+          class="cursor-pointer transition transform hover:scale-110"
+          :style="iconStyle(n)"
+          @click="select(n)"
+          @mouseover="hoverValue = n"
+          @mouseleave="hoverValue = null"
+        >
+          {{ getIcon() }}
+        </span>
+      </div>
+
+      <!-- Error message -->
+      <p v-if="validation.$error" class="text-red-500 text-sm italic">
+        <span v-if="validation.required.$invalid">Please select an option.</span>
+      </p>
+    </div>
+  `,
+  props: {
+    modelValue: Number,
+    label: String,
+    validation: {
+      type: Object,
+      default: () => ({ $error: false, required: { $invalid: false } })
+    },
+    min: { type: Number, default: 1 },
+    max: { type: Number, default: 5 },
+    icon: { type: String, default: "star" },
+    size: { type: Number, default: 24 }
+  },
+  emits: ["update:modelValue"],
+  setup(props, { emit }) {
+    const hoverValue = ref(null)
+
+    const rangeArray = computed(() => {
+      return Array.from(
+        { length: props.max - props.min + 1 },
+        (_, i) => i + props.min
+      )
+    })
+
+    const select = (value) => {
+      emit("update:modelValue", value)
+    }
+
+    const isActive = (n) => {
+      const current = hoverValue.value ?? props.modelValue
+      return n <= current
+    }
+
+    const iconStyle = (n) => ({
+      fontSize: props.size + "px",
+      cursor: "pointer",
+      color: isActive(n) ? "#f5b301" : "#ccc",
+      transition: "color 0.2s"
+    })
+
+    const getIcon = () => {
+      const icons = {
+        star: "★",
+        heart: "❤",
+        circle: "●",
+        square: "■",
+        like: "👍",
+        smile: "😊"
+      }
+      return icons[props.icon] || "★"
+    }
+
+    return { hoverValue, rangeArray, select, iconStyle, getIcon }
+  }
+}
+
 
 const app = createApp({
     setup() {
         const audioQ4 = ref(null)
 
         const audioSources = {
-            q4: '/assets/mp3/listening1.mp3'
+            q4: '/assets/mp3/listening1.mp3',
+            // q4: 'https://drive.usercontent.google.com/download?id=1iR3wlltVx2jzafNQmTX2xINblrVK1OKY&export=download'
         }
 
         const playAudio = (key) => {
@@ -20,27 +103,39 @@ const app = createApp({
             }
 
             const audio = audioMap[key]
-            debugger;
+            // debugger;
             if (!audio) return
 
             audio.currentTime = 0 // replay from start
             audio.play()
         }
 
-        const step = ref(0);
+        const step = ref(1);
         const formData = ref({
             name: '',
-            email: '',
-            question1: '',
             question2: '',
-            question3: [],
-            question4: '',
-            question5: '',
+            favoriteShoe: '',
+            myRating: '',
             beginTimestamp: '',
             submissionTimestamp: '',
         });
         const rowNumber = ref(-1);    // store the submitted row result
         const isSubmitting = ref(false)
+        const shoeOptions = [
+          {
+            value: 'A',
+            imageSrc: '/assets/images/t1q1a.jpg',
+          },
+          {
+            value: 'B',
+            imageSrc: '/assets/images/t1q1b.jpg',
+          }
+        ];
+
+        const radioOptions = [
+          { value: "Yes", label: "Yes" },
+          { value: "No", label: "No" }
+        ];
 
         // Load data from session storage on component initialization
         if (sessionStorage.getItem('rowNumber')) {
@@ -49,19 +144,9 @@ const app = createApp({
 
         const rules = computed(() => ({
             name: { required, minLength: minLength(3) },
-            email: { required, email },
-            question1: step.value === 1
-                ? {}
-                : { required, minLength: minLength(5) },
-            question2: step.value === 1
-                ? {}
-                : { required },
-            question4:  step.value === 1
-                ? {}
-                : { required },
-            question5:  step.value === 1
-                ? {}
-                : { required },
+            favoriteShoe:  { required },
+            myRating:  { required },
+            question2: { required },
         }));
 
 
@@ -138,6 +223,8 @@ const app = createApp({
             v$,
             rowNumber,
             isSubmitting,
+            shoeOptions,
+            radioOptions,
             validateNextStep,
             prevStep,
             startNewSubmission,
@@ -148,6 +235,10 @@ const app = createApp({
 
 app.component('ListeningQuestion', ListeningQuestion) // registering components
 app.component('ImageQuestion', ImageQuestion) // registering components
+app.component('ImageRadioQuestion', ImageRadioQuestion) // registering components
+app.component('RatingQuestion', RatingQuestion) // registering components
+app.component('TextInputQuestion', TextInputQuestion) // registering components
+app.component('RadioButtonQuestion', RadioButtonQuestion) // registering components
 app.mount('#app')
 
 })

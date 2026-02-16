@@ -1,8 +1,21 @@
-const ImageQuestion = {
+const TextInputQuestion = {
   props: {
-    label: String,
-    imageSrc: String,
-    modelValue: String,
+    label: {
+      type: String,
+      default: "Question:"
+    },
+    placeholder: {
+      type: String,
+      default: "Enter your answer here"
+    },
+    id: {
+      type: String,
+      default: "textInput"
+    },
+    modelValue: {
+      type: String,
+      default: ""
+    },
     validation: {
       type: Object,
       default: () => ({ $error: false, required: { $invalid: false } })
@@ -80,7 +93,7 @@ const ImageQuestion = {
   template: `
     <div class="qblock mb-4">
 
-      <label class="block text-gray-700 font-bold mb-3 required qtitle">
+      <label :for="id" class="block text-gray-700 font-bold mb-2 required qtitle">
         <span class="qnumber">Q1. </span>{{ label }}
       </label>
 
@@ -125,27 +138,23 @@ const ImageQuestion = {
         ></div>
       </div>
 
-      <!-- IMAGE -->
-      <img
-        :src="imageSrc"
-        alt="Question Image"
-        class="mb-4 rounded-lg max-w-full"
-      >
-
-      <!-- TEXTAREA ANSWER -->
-      <textarea
-        class="shadow appearance-none border rounded w-full py-2 px-3
-               text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="Describe what you see in the picture..."
+      <!-- TEXT INPUT -->
+      <input
+        type="text"
+        :placeholder="placeholder"
+        :id="id"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
+        class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
         @blur="$emit('blur')"
-      ></textarea>
+      />
 
-      <!-- Error -->
       <p v-if="validation.$error" class="text-red-500 text-sm italic">
         <span v-if="validation.required.$invalid">
-          Please select an option.
+          This field is required.
+        </span>
+        <span v-if="validation.minLength && validation.minLength.$invalid">
+          Must be at least 3 characters.
         </span>
       </p>
 

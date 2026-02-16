@@ -1,3 +1,6 @@
+body {
+  font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+}
 
 .fade-enter-active,
 .fade-leave-active {
@@ -80,6 +83,19 @@ input:invalid {
     #cbd5e1 16px
   );
   opacity: 0.6;
+}
+
+.audio-progress {
+  width: 100%;
+  height: 8px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.audio-progress-bar {
+  height: 8px;
+  background-color: #4CAF50; /* Green */
+  width: 0%;
 }
 
 /* ---------- Countdown text ---------- */

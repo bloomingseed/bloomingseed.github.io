@@ -1,8 +1,20 @@
-const ImageQuestion = {
+const RadioButtonQuestion = {
   props: {
-    label: String,
-    imageSrc: String,
-    modelValue: String,
+    label: {
+      type: String,
+      default: "Question:"
+    },
+    options: {
+      type: Array,
+      default: () => [
+        { value: "Option 1", label: "Option 1" },
+        { value: "Option 2", label: "Option 2" }
+      ]
+    },
+    modelValue: {
+      type: String,
+      default: ""
+    },
     validation: {
       type: Object,
       default: () => ({ $error: false, required: { $invalid: false } })
@@ -80,7 +92,7 @@ const ImageQuestion = {
   template: `
     <div class="qblock mb-4">
 
-      <label class="block text-gray-700 font-bold mb-3 required qtitle">
+      <label class="block text-gray-700 font-bold mb-2 required qtitle">
         <span class="qnumber">Q1. </span>{{ label }}
       </label>
 
@@ -125,24 +137,29 @@ const ImageQuestion = {
         ></div>
       </div>
 
-      <!-- IMAGE -->
-      <img
-        :src="imageSrc"
-        alt="Question Image"
-        class="mb-4 rounded-lg max-w-full"
+      <!-- RADIO OPTIONS -->
+      <div
+        v-for="option in options"
+        :key="option.value"
+        class="flex items-center mb-2"
       >
+        <input
+          type="radio"
+          :id="'radio-' + option.value"
+          :value="option.value"
+          :checked="modelValue === option.value"
+          @change="$emit('update:modelValue', option.value)"
+          class="mr-2 leading-tight"
+          @blur="$emit('blur')"
+        />
+        <label
+          :for="'radio-' + option.value"
+          class="text-gray-700"
+        >
+          {{ option.label }}
+        </label>
+      </div>
 
-      <!-- TEXTAREA ANSWER -->
-      <textarea
-        class="shadow appearance-none border rounded w-full py-2 px-3
-               text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="Describe what you see in the picture..."
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        @blur="$emit('blur')"
-      ></textarea>
-
-      <!-- Error -->
       <p v-if="validation.$error" class="text-red-500 text-sm italic">
         <span v-if="validation.required.$invalid">
           Please select an option.

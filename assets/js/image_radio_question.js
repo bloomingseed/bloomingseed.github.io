@@ -1,7 +1,10 @@
-const ImageQuestion = {
+const ImageRadioQuestion = {
   props: {
     label: String,
-    imageSrc: String,
+    options: {
+      type: Array, // { value, imageSrc, label }
+      required: true
+    },
     modelValue: String,
     validation: {
       type: Object,
@@ -125,25 +128,42 @@ const ImageQuestion = {
         ></div>
       </div>
 
-      <!-- IMAGE -->
-      <img
-        :src="imageSrc"
-        alt="Question Image"
-        class="mb-4 rounded-lg max-w-full"
-      >
+      <!-- IMAGE RADIO OPTIONS -->
+      <div class="flex flex-col md:flex-row gap-4 justify-center">
 
-      <!-- TEXTAREA ANSWER -->
-      <textarea
-        class="shadow appearance-none border rounded w-full py-2 px-3
-               text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        placeholder="Describe what you see in the picture..."
-        :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
-        @blur="$emit('blur')"
-      ></textarea>
+        <label
+          v-for="option in options"
+          :key="option.value"
+          class="flex flex-col items-center mb-2 md:mb-0"
+        >
 
-      <!-- Error -->
-      <p v-if="validation.$error" class="text-red-500 text-sm italic">
+          <div>
+            <input
+              type="radio"
+              :value="option.value"
+              :checked="modelValue === option.value"
+              @change="$emit('update:modelValue', option.value)"
+              @blur="$emit('blur')"
+              class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+            />
+            <span class="text-center ml-2">
+              {{ option.value }}
+            </span>
+          </div>
+
+          <div class="flex justify-center items-center h-52 px-2 rounded border border-gray-200 shadow-md">
+            <img
+              :src="option.imageSrc"
+              :alt="option.value"
+              class="max-h-52 w-auto"
+            >
+          </div>
+
+        </label>
+
+      </div>
+
+      <p v-if="validation.$error" class="text-red-500 text-sm italic mt-2">
         <span v-if="validation.required.$invalid">
           Please select an option.
         </span>

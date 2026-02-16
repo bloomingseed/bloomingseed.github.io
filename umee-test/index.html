@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,17 +13,19 @@
   <!-- <div id="app" class="min-w-320 max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md"> -->
   <div id="app" class="w-full max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md">
     <transition name="fade" mode="out-in">
-      <div v-if="step === 0" key="step0">
-        <h1 class="text-3xl font-semibold mb-4">Umee test survey</h1>
-        <h2 class="text-2xl font-semibold mb-4">Welcome!</h2>
+      <div v-show="step === 0">
+        <h1 class="text-3xl font-semibold mb-6">PHIẾU KHẢO SÁT NGHE CHÍNH TẢ</h1>
+        <h2 class="text-2xl font-semibold">Chào mừng bạn tham gia khảo sát!</h2>
         <div v-if="rowNumber !== -1" class="bg-yellow-100 text-yellow-700 border-l-4 border-yellow-500 p-4 mb-4 rounded" role="alert">
           <p class="font-bold">Notice</p>
           <p>You have previously submitted a response (Row #{{ rowNumber }}). You can still start a new submission if you want.</p>
-      </div>
-        <p class="mb-4">
-          Welcome to the survey!
-          This is a test survey blakjsdlfkjalskdjflajsdlf
-          alsdkjflakjsdflkjasldjf
+        </div>
+        <p class="mt-8 mb-4">Khảo sát này được thực hiện với mục đích nghiên cứu học thuật. Tất cả thông tin bạn cung cấp sẽ chỉ dùng cho nghiên cứu, không thu thập dữ liệu nhạy cảm, không tiết lộ danh tính và không sử dụng cho bất kỳ mục đích thương mại nào.</p>
+        <p class="mb-4">Bạn có thể hoàn toàn yên tâm khi tham gia. Những chia sẻ của bạn sẽ góp phần quan trọng vào kết quả nghiên cứu.</p>
+        <p class="mb-4">Rất mong nhận được sự hợp tác của bạn.
+        Xin chân thành cảm ơn bạn đã dành thời gian tham gia khảo sát!</p>
+        <p class="mt-8 mb-4">
+          大家好！本问卷所有的数据仅用于学术研究，不会涉及到任何个人隐私，也不会用于任何商业用途。请您放心填写，衷心感谢您的支持与配合！感谢您参与本次问卷调查。
         </p>
 
         <div class="flex justify-center">
@@ -35,66 +37,130 @@
         </div>
       </div>
 
-      <div v-if="step === 1" key="step1">
-        <h2 class="text-2xl font-semibold mb-4">Welcome to the Survey!</h2>
-        <p class="mb-4">Please provide your basic information to get started.</p>
-        <div class="mb-4">
-          <label for="name" class="block text-gray-700 text-sm font-bold mb-2 required">Name:</label>
-          <input type="text" id="name" v-model="formData.name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @blur="v$.name.$touch()" @input="v$.name.$touch()">
-          <p v-if="v$.name.$error" class="text-red-500 text-xs italic">
+      <div v-show="step === 1">
+        <h2 class="text-2xl font-semibold">Chào mừng bạn đã bắt đầu bài khảo sát!</h2>
+        <p class="mb-2 text-red-500">Mục có dấu * màu đỏ là thông tin bắt buộc.</p>
+        <hr class="mb-6"/>
+
+        <!-- text input question -->
+        <!-- <div class="qblock mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2 required qtitle"><span class="qnumber">Q1. </span>Name:</label>
+          <input type="text" placeholder="Điền câu trả lời ở đây" id="name" v-model="formData.name" 
+            class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
+            @blur="v$.name.$touch()" @input="v$.name.$touch()">
+          <p v-if="v$.name.$error" class="text-red-500 text-sm italic">
             <span v-if="v$.name.required.$invalid">Name is required.</span>
             <span v-if="v$.name.minLength.$invalid">Name must be at least 3 characters.</span>
           </p>
-        </div>
-        <div class="mb-6">
-          <label for="email" class="block text-gray-700 text-sm font-bold mb-2 required">Email:</label>
-          <input type="email" id="email" v-model="formData.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @blur="v$.email.$touch()" @input="v$.email.$touch()">
-          <p v-if="v$.email.$error" class="text-red-500 text-xs italic">
-            <span v-if="v$.email.required.$invalid">Email is required.</span>
-            <span v-if="v$.email.email.$invalid">Invalid email address.</span>
-          </p>
-        </div>
-        
-        <div class="flex justify-center mt-4">
+        </div> -->
+        <text-input-question
+          label="Name:"
+          placeholder="Điền câu trả lời ở đây"
+          id="name"
+          v-model="formData.name"
+          :validation="v$.name"
+          audio-src="/assets/mp3/choi 1.m4a"
+        ></text-input-question>
+
+        <!-- radio button question -->
+        <!-- <div class="qblock mb-4">
+            <label class="block text-gray-700 font-bold mb-2 required qtitle"><span class="qnumber">Q1. </span>Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?</label>
+            <div class="flex items-center mb-2">
+                <input type="radio" id="option1" value="Option 1" v-model="formData.question2" class="mr-2 leading-tight" @blur="v$.question2.$touch()">
+                <label for="option1" class="text-gray-700">Option 1</label>
+            </div>
+            <div class="flex items-center mb-2">
+                <input type="radio" id="option2" value="Option 2" v-model="formData.question2" class="mr-2 leading-tight">
+                <label for="option2" class="text-gray-700">Option 2</label>
+            </div>
+            <p v-if="v$.question2.$error" class="text-red-500 text-sm italic">
+                <span v-if="v$.question2.required.$invalid">Please select an option.</span>
+            </p>
+        </div> -->
+        <!-- <radio-button-question
+          label="Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
+          :options="radioOptions"
+          v-model="formData.question2"
+          :validation="v$.question2"
+        ></radio-button-question> -->
+        <radio-button-question
+          label="Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
+          :options="radioOptions"
+          v-model="formData.question2"
+          :validation="v$.question2"
+          @blur="v$.question2.$touch()"
+          audio-src="/assets/mp3/choi 1.m4a"
+        ></radio-button-question>
+
+        <!-- image question -->
+        <image-radio-question
+          label="Choose your favorite shoe:"
+          :options="shoeOptions"
+          v-model="formData.favoriteShoe"
+          :validation="v$.favoriteShoe"
+          @blur="v$.favoriteShoe.$touch()"
+          audio-src="/assets/mp3/choi 1.m4a"
+        ></image-radio-question>
+
+        <!-- rating question -->
+        <!-- <rating-question
+          label="How would you rate our service?"
+          :range="10"
+          icon-type="heart"
+          :model-value="formData.myRating"
+          @change="handleRatingChange"
+        ></rating-question> -->
+        <rating-question
+          v-model="formData.myRating"
+          label="How would you rate our service?"
+          :validation="v$.myRating"
+          :min="1"
+          :max="10"
+          icon="heart"
+          size="32"
+        ></rating-question>
+        <hr>
+        <div class="flex justify-center mt-6">
           <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
         </div>
       </div>
 
-      <div v-if="step === 2" key="step2">
+      <div v-show="step === 2">
         <h2 class="text-2xl font-semibold mb-4">Survey Questions</h2>
-        <div class="mb-4">
-          <label for="question1" class="block text-gray-700 text-sm font-bold mb-2 required">Question 1: What is your favorite color?</label>
+        <!-- <div class="mb-4">
+          <label for="question1" class="block text-gray-700 font-bold mb-2 required">Question 1: What is your favorite color?</label>
           <textarea id="question1" v-model="formData.question1" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" @blur="v$.question1.$touch()" @input="v$.question1.$touch()"></textarea>
-          <p v-if="v$.question1.$error" class="text-red-500 text-xs italic">
+          <p v-if="v$.question1.$error" class="text-red-500 text-sm italic">
             <span v-if="v$.question1.required.$invalid">This question is required.</span>
             <span v-if="v$.question1.minLength.$invalid">This question requires at least 5 characters.</span>
           </p>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2 required">Question 2: Choose your favorite option:</label>
+            <label class="block text-gray-700 font-bold mb-2 required">Question 2: Choose your favorite option:</label>
             <div class="flex items-center mb-2">
                 <input type="radio" id="option1" value="Option 1" v-model="formData.question2" class="mr-2 leading-tight" @blur="v$.question2.$touch()">
-                <label for="option1" class="text-sm text-gray-700">Option 1</label>
+                <label for="option1" class="text-gray-700">Option 1</label>
             </div>
             <div class="flex items-center mb-2">
                 <input type="radio" id="option2" value="Option 2" v-model="formData.question2" class="mr-2 leading-tight">
-                <label for="option2" class="text-sm text-gray-700">Option 2</label>
+                <label for="option2" class="text-gray-700">Option 2</label>
             </div>
-            <p v-if="v$.question2.$error" class="text-red-500 text-xs italic">
+            <p v-if="v$.question2.$error" class="text-red-500 text-sm italic">
                 <span v-if="v$.question2.required.$invalid">Please select an option.</span>
             </p>
         </div>
         <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2">Question 3: Select all that apply:</label>
+        <hr/>
+          <label class="block text-gray-700 font-bold mb-2">Question 3: Select all that apply:</label>
           <div class="flex items-center mb-2">
             <input type="checkbox" id="choice1" value="Choice 1" v-model="formData.question3" class="mr-2 leading-tight">
-            <label for="choice1" class="text-sm text-gray-700">Choice 1</label>
+            <label for="choice1" class="text-gray-700">Choice 1</label>
           </div>
           <div class="flex items-center mb-2">
             <input type="checkbox" id="choice2" value="Choice 2" v-model="formData.question3" class="mr-2 leading-tight">
-            <label for="choice2" class="text-sm text-gray-700">Choice 2</label>
+            <label for="choice2" class="text-gray-700">Choice 2</label>
           </div>
-        </div>
+        </div> -->
 
         <!-- Question 4: Listening Question -->
         <!-- <listening-question
@@ -104,38 +170,32 @@
           @blur="v$.question4.$touch()"
         >
           <template #error>
-            <p v-if="v$.question4.$error" class="text-red-500 text-xs italic">
+            <p v-if="v$.question4.$error" class="text-red-500 text-sm italic">
               This question is required.
             </p>
           </template>
         </listening-question> -->
-        <listening-question
+        <!-- <listening-question
           label="Question 4: Listen and answer"
-          audio-src="/assets/mp3/listening1.mp3"
+          audio-src="/assets/mp3/Stimuli 1/vo 1.m4a"
           v-model="formData.question4"
           @blur="v$.question4.$touch()"
         >
           <template #error>
-            <p v-if="v$.question4.$error" class="text-red-500 text-xs italic">
+            <p v-if="v$.question4.$error" class="text-red-500 text-sm italic">
               This question is required.
             </p>
           </template>
-        </listening-question>
+        </listening-question> -->
 
         <!-- Question 5: Image question-->
-         <image-question
+         <!-- <image-question
             image-src="/assets/images/shoes-comparision.jpg"
             label="Describe what you see in this image"
             v-model="formData.question5"
             @blur="v$.question5.$touch()"
-         >
-          <template #error>
-            <p v-if="v$.question5.$error" class="text-red-500 text-xs italic">
-                <span v-if="v$.question5.required.$invalid">Please select an option.</span>
-            </p>
-          </template>
-          
-         </image-question>
+            :validation="v$.question5"
+         ></image-question> -->
          
          
         <div class="flex justify-center mt-4">
@@ -144,7 +204,7 @@
         </div>
       </div>
 
-      <div v-if="step === 3" key="step3">
+      <div v-show="step === 3">
         <h2 class="text-2xl font-semibold mb-4">Thank You!</h2>
         <p>Your response has been collected. Thank you for participating in the survey!</p>
         <p>Submitted row #{{rowNumber}}</p>
@@ -172,5 +232,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@vuelidate/validators"></script>
 <script src="/assets/js/listening_question.js"></script>
 <script src="/assets/js/image_question.js"></script>
+<script src="/assets/js/image_radio_question.js"></script>
+<script src="/assets/js/text_input_question.js"></script>
+<script src="/assets/js/radio_button_question.js"></script>
+<!-- <script src="/assets/js/rating_question.js"></script> -->
 </body>
 </html>
