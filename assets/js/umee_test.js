@@ -98,16 +98,9 @@ const app = createApp({
         const rowNumber = ref(-1);    // store the submitted row result
         const isSubmitting = ref(false)
         const audioStates = ref({
+          step0: {},
           step1: {},
           step2: {},
-        })
-        const questionsCount = ref({
-          step1: {
-            total: 0,
-          },
-          step2:  {
-            total: 0,
-          },
         })
 
         // Load data from session storage on component initialization
@@ -116,12 +109,13 @@ const app = createApp({
         }
 
         const rules = computed(() => ({
-            'Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
-            'Q2. Giới tính của bạn:': {required},
-            'Q3. Bạn là người vùng miền nào?': {required},
-            'Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
-            'Q5. STT khảo sát của bạn/ 您的被试偏号:': {required},
-            'Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
+            'Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
+            'Giới tính của bạn:': {required},
+            'Bạn là người vùng miền nào?': {required},
+            'Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
+            'STT khảo sát của bạn/ 您的被试偏号:': {required},
+            // 'Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
+            'Q1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
             // myRating:  { required },
         }));
 
@@ -191,7 +185,6 @@ const app = createApp({
             v$,
             rowNumber,
             isSubmitting,
-            questionsCount,
             validateNextStep,
             prevStep,
             startNewSubmission,

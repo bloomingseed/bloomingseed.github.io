@@ -14,7 +14,7 @@
   <div id="app" class="w-full max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md">
     <transition name="fade" mode="out-in">
       <div :key="step">
-        <div v-if="step === 0">
+        <div v-if="step === -1">
           <h1 class="text-3xl font-semibold mb-6">PHIẾU KHẢO SÁT NGHE CHÍNH TẢ</h1>
           <h2 class="text-2xl font-semibold">Chào mừng bạn tham gia khảo sát!</h2>
           <div v-if="rowNumber !== -1" class="bg-yellow-100 text-yellow-700 border-l-4 border-yellow-500 p-4 mb-4 rounded" role="alert">
@@ -38,66 +38,66 @@
           </div>
         </div>
 
-        <div v-else-if="step === 1">
+        <div v-else-if="step === 0">
           <h2 class="text-2xl font-semibold">Chào mừng bạn đã bắt đầu bài khảo sát!</h2>
           <p class="mb-2 text-red-500">Mục có dấu * màu đỏ là thông tin bắt buộc.</p>
           <hr class="mb-6"/>
 
           <radio-button-question
-            label="Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
+            label="Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?"
             :options="[{ value: 'Có' }, { value: 'Không' }]"
-            v-model="formData['Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
-            :validation="v$['Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
-            @blur="v$['Q1. Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?'].$touch()"
+            v-model="formData['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
+            :validation="v$['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?']"
+            @blur="v$['Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?'].$touch()"
             :audio-state="audioStates.step1"
           ></radio-button-question>
 
           <radio-button-question
-            label="Q2. Giới tính của bạn:"
+            label="Giới tính của bạn:"
             :options="[{ value: 'Nam' }, { value: 'Nữ' }, { value: 'Khác' }]"
-            v-model="formData['Q2. Giới tính của bạn:']"
-            :validation="v$['Q2. Giới tính của bạn:']"
-            @blur="v$['Q2. Giới tính của bạn:'].$touch()"
+            v-model="formData['Giới tính của bạn:']"
+            :validation="v$['Giới tính của bạn:']"
+            @blur="v$['Giới tính của bạn:'].$touch()"
             :audio-state="audioStates.step1"
           ></radio-button-question>
 
           <radio-button-question
-            label="Q3. Bạn là người vùng miền nào?"
+            label="Bạn là người vùng miền nào?"
             :options="[{ value: 'Bắc Trung Bộ'},
             { value: 'Nam Trung Bộ'},
             { value: 'Đông Nam Bộ'},
             { value: 'Tây Nam Bộ'},]"
-            v-model="formData['Q3. Bạn là người vùng miền nào?']"
-            :validation="v$['Q3. Bạn là người vùng miền nào?']"
-            @blur="v$['Q3. Bạn là người vùng miền nào?'].$touch()"
+            v-model="formData['Bạn là người vùng miền nào?']"
+            :validation="v$['Bạn là người vùng miền nào?']"
+            @blur="v$['Bạn là người vùng miền nào?'].$touch()"
             :audio-state="audioStates.step1"
           ></radio-button-question>
           
           <text-input-question
-            label="Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)"
+            label="Mã số tỉnh thành quê quán của bạn (VD: 92 CT)"
             id="name"
-            v-model="formData['Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
-            :validation="v$['Q4. Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
+            v-model="formData['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
+            :validation="v$['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
             :audio-state="audioStates.step1"
           ></text-input-question>
           
           <text-input-question
-            label="Q5. STT khảo sát của bạn/ 您的被试偏号:"
+            label="STT khảo sát của bạn/ 您的被试偏号:"
             id="t1q6"
-            v-model="formData['Q5. STT khảo sát của bạn/ 您的被试偏号:']"
-            :validation="v$['Q5. STT khảo sát của bạn/ 您的被试偏号:']"
+            v-model="formData['STT khảo sát của bạn/ 您的被试偏号:']"
+            :validation="v$['STT khảo sát của bạn/ 您的被试偏号:']"
             :audio-state="audioStates.step1"
           ></text-input-question>
 
 
           <!-- image question -->
           <image-radio-question
-            label="Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{value: 'B', imageSrc: '/assets/images/t1q0ab.jpg'},
-                       {value: 'A', imageSrc: '/assets/images/t1q0aa.jpg'}]"
-            v-model="formData['Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
-            :validation="v$['Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
-            @blur="v$['Q6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            label="Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'B', imageSrc: '/assets/images/t1q0b.jpg'},
+                       {value: 'A', imageSrc: '/assets/images/t1q0a.jpg'}]"
+            v-model="formData['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
             audio-src="/assets/mp3/cau nghe.mp3"
             :audio-state="audioStates.step1"
           ></image-radio-question>
@@ -116,9 +116,236 @@
             <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
           </div>
         </div>
+        
+        <div v-else-if="step === 1">
+          <h2 class="text-2xl font-semibold">Survey#1 Questions</h2>
+          <p class="mb-2 text-red-500">Mục có dấu * màu đỏ là thông tin bắt buộc.</p>
+          <hr class="mb-6"/>
+          
+          <image-radio-question
+            label="1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q1a.jpg'},
+                       {value: 'B', imageSrc: '/assets/images/t1q1b.jpg'}]"
+            v-model="formData['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 1/vo 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+          
+          <image-radio-question
+            label="2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q2a.jpg'},
+                       {value: 'B', imageSrc: '/assets/images/t1q2b.jpg'}]"
+            v-model="formData['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 2/cu 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+          
+          <image-radio-question
+            label="3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q3a.jpg'},
+                       {value: 'B', imageSrc: '/assets/images/t1q3b.jpg'}]"
+            v-model="formData['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 3/đia 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+          
+          <image-radio-question
+            label="4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q4a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q4b.jpg'}]"
+            v-model="formData['4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 4/mu 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <radio-button-question
+            label="5. Người nói vừa phát âm từ NGHĨ phải không?"
+            :options="[{ value: 'Đúng/ 对'}, { value: 'Sai/ 错❌'}]"
+            v-model="formData['5. Người nói vừa phát âm từ NGHĨ phải không?']"
+            :validation="v$['5. Người nói vừa phát âm từ NGHĨ phải không?']"
+            @blur="v$['5. Người nói vừa phát âm từ NGHĨ phải không?'].$touch()"
+            audio-src="/assets/mp3/Stimuli 6/nghi c2.m4a"
+            :audio-state="audioStates.step1"
+          ></radio-button-question>
+
+          <image-radio-question
+            label="6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q6a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q6b.jpg'}]"
+            v-model="formData['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 5/ro 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q7a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q7b.jpg'}]"
+            v-model="formData['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 7/sua 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q8a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q8b.jpg'}]"
+            v-model="formData['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 8/ta 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <radio-button-question
+            label="9. Người nói vừa phát âm từ RỂ phải không?"
+            :options="[{ value: 'Đúng/ 对'}, { value: 'Sai/ 错❌'}]"
+            v-model="formData['9. Người nói vừa phát âm từ RỂ phải không?']"
+            :validation="v$['9. Người nói vừa phát âm từ RỂ phải không?']"
+            @blur="v$['9. Người nói vừa phát âm từ RỂ phải không?'].$touch()"
+            audio-src="/assets/mp3/Stimuli 9/re 1.m4a"
+            :audio-state="audioStates.step1"
+          ></radio-button-question>
+
+          <image-radio-question
+            label="10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q10a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q10b.jpg'}]"
+            v-model="formData['10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 10/mo 1.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q1a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q1b.jpg'}]"
+            v-model="formData['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 1/vo 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q12a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q12b.jpg'}]"
+            v-model="formData['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 2/cu 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q3a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q3b.jpg'}]"
+            v-model="formData['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 3/đia 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q4b.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q4a.jpg'}]"
+            v-model="formData['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 4/mu 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          
+          <radio-button-question
+            label="15. Người nói vừa phát âm từ NGHỈ phải không?"
+            :options="[{ value: 'Đúng/ 对'}, { value: 'Sai/ 错❌'}]"
+            v-model="formData['15. Người nói vừa phát âm từ NGHỈ phải không?']"
+            :validation="v$['15. Người nói vừa phát âm từ NGHỈ phải không?']"
+            @blur="v$['15. Người nói vừa phát âm từ NGHỈ phải không?'].$touch()"
+            audio-src="/assets/mp3/Stimuli 6/nghi c1.m4a"
+            :audio-state="audioStates.step1"
+          ></radio-button-question>
+
+          <image-radio-question
+            label="16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q6a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q6b.jpg'}]"
+            v-model="formData['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 5/go 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q7a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q7b.jpg'}]"
+            v-model="formData['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 7/sua 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <image-radio-question
+            label="18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q8a.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q8b.jpg'}]"
+            v-model="formData['18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 8/ta 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+
+          <radio-button-question
+            label="19. Người nói vừa phát âm từ RỄ phải không?"
+            :options="[{ value: 'Đúng/ 对'}, { value: 'Sai/ 错❌'}]"
+            v-model="formData['19. Người nói vừa phát âm từ RỄ phải không?']"
+            :validation="v$['19. Người nói vừa phát âm từ RỄ phải không?']"
+            @blur="v$['19. Người nói vừa phát âm từ RỄ phải không?'].$touch()"
+            audio-src="/assets/mp3/Stimuli 9/re 2.m4a"
+            :audio-state="audioStates.step1"
+          ></radio-button-question>
+
+          <image-radio-question
+            label="20. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
+            :options="[{value: 'A', imageSrc: '/assets/images/t1q10b.jpg'},
+                      {value: 'B', imageSrc: '/assets/images/t1q10a.jpg'}]"
+            v-model="formData['20. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            :validation="v$['20. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
+            @blur="v$['20. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
+            audio-src="/assets/mp3/Stimuli 10/mo 2.m4a"
+            :audio-state="audioStates.step1"
+          ></image-radio-question>
+          <hr>
+          <div class="flex justify-center mt-6">
+            <button @click="validateNextStep" class="bg-white text-blue-700 font-semibold py-4 px-6 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 transition-colors duration-200">Next</button>
+          </div>
+        </div>
 
         <div v-else-if="step === 2">
-          <h2 class="text-2xl font-semibold mb-4">Survey Questions</h2>
+          <h2 class="text-2xl font-semibold mb-4">Survey# 1 Questions</h2>
           
           
           <div class="flex justify-center mt-4">
