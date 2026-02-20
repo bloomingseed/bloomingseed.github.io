@@ -4,7 +4,7 @@ const { createApp, ref, onMounted, computed } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
-const POST_URL = "https://script.google.com/macros/s/AKfycbzXj0ENb3pMrd-mT_sUryxeXL5gD4drczlyN4g1M-vbxBjFTB-2jVk5II_TjExV4gjsIQ/exec";
+const POST_URL = "https://script.google.com/macros/s/AKfycbwJEjsnxEkyUhGmOu30Mq4elKW5rOLfAppPesgk33yPgGuksUoQ1rWD_VA-t4snpSu5Hw/exec";
 
 const RatingQuestion = {
     template: `
@@ -116,20 +116,24 @@ const RatingQuestion = {
 
 const app = createApp({
     setup() {
-        const step = ref(3);
+        const step = ref(-1);
+        const formData0 = ref({
+            startTimestamp: '',
+          });
         const formData = ref({
-            beginTimestamp: '',
-            submissionTimestamp: '',
+            startTimestamp: '',
         });
         const formData2 = ref({
-            beginTimestamp: '',
-            submissionTimestamp: '',
+            startTimestamp: '',
         });
         const formData3 = ref({
-            beginTimestamp: '',
-            submissionTimestamp: '',
+            startTimestamp: '',
         });
+        const formDataSubmission = ref({
+            startTimestamp: '',
+        })
         const rowNumber = ref(-1);    // store the submitted row result
+        const showConfirmation = ref(false);  // whether to show step confirmation dialog. initially false
         const isSubmitting = ref(false)
         const audioStates = ref({
           step0: {},
@@ -143,57 +147,168 @@ const app = createApp({
             rowNumber.value = parseInt(sessionStorage.getItem('rowNumber'));
         }
 
+        const rules0 = computed(() => ({
+            'Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': { required },
+            'Giới tính của bạn:': { required },
+            'Bạn là người vùng miền nào?': { required },
+            'Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': { required },
+            'STT khảo sát của bạn/ 您的被试偏号:': { required },
+            'Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+        }))
+
         const rules = computed(() => ({
-            'Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
-            'Giới tính của bạn:': {required},
-            'Bạn là người vùng miền nào?': {required},
-            'Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
-            'STT khảo sát của bạn/ 您的被试偏号:': {required},
-            // 'Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
-            'Q1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
+            '1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '5. Người nói vừa phát âm từ NGHĨ phải không?': { required },
+            '6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '9. Người nói vừa phát âm từ RỂ phải không?': { required },
+            '10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '15. Người nói vừa phát âm từ NGHỈ phải không?': { required },
+            '16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '19. Người nói vừa phát âm từ RỄ phải không?': { required },
+            '20. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            // 'Vui lòng đánh giá giọng phát âm của người nói dựa trên cảm nhận khách quan của bạn!': { required },
+            // 'Đánh giá mức độ khó của bài khảo sát này:': { required },
+            // 'Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?': { required },
             // myRating:  { required },
         }));
         const rules2 = computed(() => ({
-            '1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
-            
+            '1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '5. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '8. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '10. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '12. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '15. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '18. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            '19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            // 'Vui lòng đánh giá giọng phát âm của người nói dựa trên cảm nhận khách quan của bạn!': { required },
+            // 'Đánh giá mức độ khó của bài khảo sát này:': { required },
+            // 'Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?': { required },
         }));
         const rules3 = computed(() => ({
-            'Hiện tại, bạn có gặp vấn đề sinh lý hoặc bệnh nào liên quan có ảnh hưởng đến thính giác khi nghe chọn đáp án không?': {required},
-            'Giới tính của bạn:': {required},
-            'Bạn là người vùng miền nào?': {required},
-            'Mã số tỉnh thành quê quán của bạn (VD: 92 CT)': {required},
-            'STT khảo sát của bạn/ 您的被试偏号:': {required},
-            // 'Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
-            'Q1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': {required},
-            // myRating:  { required },
+            '1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '5. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            '6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '8. Người nói vừa phát âm từ CÃI VÃ phải không?': { required },
+            '9. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '10. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            '11. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '12. Người nói vừa phát âm từ GIỎI phải không?': { required },
+            '13. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '14. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '15. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            '16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            'Vui lòng đánh giá giọng phát âm của người nói dựa trên cảm nhận khách quan của bạn!': { required },
+            'Đánh giá mức độ khó của bài khảo sát này:': { required },
+            'Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?': { required },
         }));
 
 
+        const v0$ = useVuelidate(rules0, formData0);
         const v$ = useVuelidate(rules, formData);
         const v2$ = useVuelidate(rules2, formData2);
         const v3$ = useVuelidate(rules3, formData3);
 
-        const validateNextStep = async () => {
-          var result = null;
-          if(step.value === 0 || step.value === 1)
-            result = await v$.value.$validate();
-          else if(step.value === 2)
-            result = await v2$.value.$validate();
-          else if(step.value === 3)
-            result = await v3$.value.$validate();
-          if (result) {
-            step.value++;
+
+        const attemptNextStep = async () => {
+          // 1. Validate
+          var validationResult = await validateCurrentStep();
+
+          // 2. If validation succeeds, show confirmation
+          if (validationResult) {
+            showConfirmation.value = true;
           }
+          // else do nothing, the validation should display the errors
         };
+
+        const validateCurrentStep = async () => {
+          // validate
+          if (step.value === 0)
+            return await v0$.value.$validate();
+          else if (step.value === 1)
+            return await v$.value.$validate();
+          else if (step.value === 2)
+            return await v2$.value.$validate();
+          else if (step.value === 3)
+            return await v3$.value.$validate();
+          return false; // default
+        };
+
+        const cancelNextStep = () => {
+          showConfirmation.value = false;
+        };
+        
+        const doNextStep  = async () => {
+          // important: assuming validateCurrentStep() has returned true
+          step.value++;
+          debouncedScrollToTop();
+
+          if(step.value === 1)
+            formData.value = {
+              startTimestamp: Date.now(), // record time begin the survey
+            };
+          else if(step.value === 2)
+            formData2.value = {
+              startTimestamp: Date.now(), // record time begin the survey
+            };
+          else if(step.value === 3)
+            formData3.value = {
+              startTimestamp: Date.now(), // record time begin the survey
+            };
+          else if(step.value === 4)
+            formDataSubmission.value = {
+              startTimestamp: Date.now(), // record time begin the survey
+            };
+          showConfirmation.value = false; // close the confirmation dialog
+          // scrollToTop();
+        };
+
+        const scrollToTop = () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // For a smooth scrolling animation
+          });
+        };
+
+        // Debounce the scrollToTop function using Lodash
+        const debouncedScrollToTop = _.debounce(scrollToTop, 100); // Debounce for 100ms
 
         const prevStep = () => {
             step.value--;
         };
 
         const startNewSubmission = () => {
-          formData.value = {
-            beginTimestamp: Date.now(), // record time begin the survey
-            submissionTimestamp: '',
+          formData0.value = {
+            startTimestamp: Date.now(), // record time begin the survey
           };
           // Clear existing data
           sessionStorage.removeItem('rowNumber');
@@ -202,51 +317,65 @@ const app = createApp({
         };
 
         const submitForm = async () => {
-            const result = await v$.value.$validate();
-            if (result) {
-                console.log('Form Data:', formData.value); // DEBUG
-                formData.value.submissionTimestamp = Date.now();
-                isSubmitting.value = true;
-                try {
-                    const response = await fetch(POST_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'text/plain',
-                        },
-                        body: JSON.stringify(formData.value)
-                    });
+            isSubmitting.value = true;
+            try {
+              var payload = {
+                'Form Data 0': {...formData0.value},
+                'Form Data 1': {...formData.value},
+                'Form Data 2': {...formData2.value},
+                'Form Data 3': {...formData3.value},
+                'Form Data Submission': {...formDataSubmission.value},
+              };
+              debugger;
 
-                    if (response.ok) {
-                        console.log('Form submitted successfully!');
-                        resp = await response.json();
-                        rowNumber.value = resp.row;
-                        sessionStorage.setItem('rowNumber', rowNumber.value.toString()); // Persist rowNumber
-                        step.value++;
-                    } else {
-                        console.error('Form submission failed:', response.status, response.statusText);
-                        alert('Form submission failed.');
-                    }
-                } catch (error) {
-                    console.error('Error submitting form:', error);
-                    alert('An error occurred while submitting the form.');
-                } finally {
-                    isSubmitting.value = false;
-                }
+              const response = await fetch(POST_URL, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'text/plain',
+                },
+                body: JSON.stringify(payload),
+              });
+              debugger;
+
+              if (!response.ok) {
+                throw new Error(`Form submission failed: ${response.status} ${response.statusText}`);
+              }
+
+              const resp = await response.json();
+              if (resp.error) {
+                throw new Error(`[${resp.error.title}] ${resp.error.message}`);
+              }
+              console.log(resp);
+              rowNumber.value = resp.row[0];
+              sessionStorage.setItem('rowNumber', rowNumber.value.toString()); // Persist rowNumber
+              step.value++;
+
+            } catch (error) {
+              console.error('Error submitting form:', error);
+              alert(`An error occurred while submitting the form: ${error.message}`);
+            } finally {
+              isSubmitting.value = false;
             }
         };
 
         return {
             audioStates,
             step,
+            formData0,
             formData,
             formData2,
             formData3,
+            formDataSubmission,
+            v0$,
             v$,
             v2$,
             v3$,
             rowNumber,
             isSubmitting,
-            validateNextStep,
+            showConfirmation,
+            attemptNextStep,
+            cancelNextStep,
+            doNextStep,
             prevStep,
             startNewSubmission,
             submitForm,

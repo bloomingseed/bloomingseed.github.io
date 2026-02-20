@@ -62,6 +62,20 @@ const TextInputQuestion = {
   },
 
   methods: {
+    normalizeText(text) {
+      if (!text) return ""; // Handle null or undefined input
+
+      // 1. Trim whitespace from both ends
+      let trimmedText = text.trim();
+
+      // 2. Convert to lowercase
+      let lowerCaseText = trimmedText.toLowerCase();
+
+      // 3. Replace multiple spaces with a single space
+      let singleSpacedText = lowerCaseText.replace(/\s+/g, ' ');
+
+      return singleSpacedText;
+    },
     play() {
       if (!this.state || this.state.timeLeft === 0) return
 
@@ -121,72 +135,67 @@ const TextInputQuestion = {
         {{ label }}
       </label>
 
-      <!-- AUDIO SECTION (only if audioSrc exists) -->
-      <template v-if="audioSrc">
-        <!-- AUDIO -->
-        <audio
-            ref="audio"
-            :src="audioSrc"
-            @timeupdate="updateAudioProgress"
-            @ended="onAudioEnded"
-        ></audio>
-
-        <!-- CONTROLS -->
-        <div class="flex justify-between gap-3 mb-3">
-
-            <button
-            type="button"
-            @click="play"
-            :disabled="!state || state.isPlaying || state.timeLeft === 0"
-            :class="[
-                'play-btn',
-                { 
-                locked: state?.timeLeft === 0,
-                playing: state?.isPlaying
-                }
-            ]"
-            >
-            ▶ Play
-            </button>
-
-            <div
-            class="countdown-text"
-            :class="{ expired: state?.timeLeft === 0 }"
-            >
-            {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
-            </div>
-
-        </div>
-
-        <!-- AUDIO PROGRESS BAR -->
-        <div class="progress-track">
-            <div
-            class="progress-fill audio"
-            :class="{ locked: state?.timeLeft === 0 }"
-            :style="{ width: (state?.audioProgress || 0) + '%' }"
-            ></div>
-        </div>
-      </template>
-
-        <!-- TEXT INPUT -->
-        <input
-            type="text"
-            :placeholder="placeholder"
-            :id="id"
-            :value="modelValue"
-            @input="$emit('update:modelValue', $event.target.value)"
-            class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
-            @blur="$emit('blur')"
-        />
-
-      <p v-if="validation.$error" class="text-red-500 text-sm italic">
-        <span v-if="validation.required.$invalid">
-          This field is required.
-        </span>
-        <span v-if="validation.minLength && validation.minLength.$invalid">
-          Must be at least 3 characters.
-        </span>
-      </p>
+      <div class="qbody">
+        <!-- AUDIO SECTION (only if audioSrc exists) -->
+        <template v-if="audioSrc">
+          <!-- AUDIO -->
+          <audio
+              ref="audio"
+              :src="audioSrc"
+              @timeupdate="updateAudioProgress"
+              @ended="onAudioEnded"
+          ></audio>
+          <!-- CONTROLS -->
+          <div class="flex justify-between gap-3 mb-3">
+              <button
+              type="button"
+              @click="play"
+              :disabled="!state || state.isPlaying || state.timeLeft === 0"
+              :class="[
+                  'play-btn',
+                  {
+                  locked: state?.timeLeft === 0,
+                  playing: state?.isPlaying
+                  }
+              ]"
+              >
+              ▶ Play
+              </button>
+              <div
+              class="countdown-text"
+              :class="{ expired: state?.timeLeft === 0 }"
+              >
+              {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
+              </div>
+          </div>
+          <!-- AUDIO PROGRESS BAR -->
+          <div class="progress-track">
+              <div
+              class="progress-fill audio"
+              :class="{ locked: state?.timeLeft === 0 }"
+              :style="{ width: (state?.audioProgress || 0) + '%' }"
+              ></div>
+          </div>
+        </template>
+          <!-- TEXT INPUT -->
+          <input
+              type="text"
+              :placeholder="placeholder"
+              :id="id"
+              :value="modelValue"
+              @input="$emit('update:modelValue', normalizeText($event.target.value))"
+              class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
+              @blur="$emit('blur')"
+          />
+        <p v-if="validation.$error" class="text-red-500 text-sm italic">
+          <span v-if="validation.required.$invalid">
+            This field is required.
+          </span>
+          <span v-if="validation.minLength && validation.minLength.$invalid">
+            Must be at least 3 characters.
+          </span>
+        </p>
+      </div>
 
     </div>
   `

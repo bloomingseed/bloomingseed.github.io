@@ -102,91 +102,81 @@ const ImageRadioQuestion = {
       {{ label }}
     </label>
 
-    <!-- AUDIO -->
-    <audio
-      ref="audio"
-      :src="audioSrc"
-      @timeupdate="updateAudioProgress"
-      @ended="onAudioEnded"
-    ></audio>
-
-    <!-- CONTROLS -->
-    <div class="flex justify-between gap-3 mb-3">
-
-      <button
-        type="button"
-        @click="play"
-        :disabled="!state || state.isPlaying || state.timeLeft === 0"
-        :class="[
-          'play-btn',
-          { 
-            locked: state?.timeLeft === 0,
-            playing: state?.isPlaying
-          }
-        ]"
-      >
-        ▶ Play
-      </button>
-
-      <div
-        class="countdown-text"
-        :class="{ expired: state?.timeLeft === 0 }"
-      >
-        {{ state?.timeLeft === 0 ? 'Time expired:' : 'Time left:' }}
-        {{ state?.timeLeft ?? countdownSeconds }}s
+    <div class="qbody">
+      <!-- AUDIO -->
+      <audio
+        ref="audio"
+        :src="audioSrc"
+        @timeupdate="updateAudioProgress"
+        @ended="onAudioEnded"
+      ></audio>
+      <!-- CONTROLS -->
+      <div class="flex justify-between gap-3 mb-3">
+        <button
+          type="button"
+          @click="play"
+          :disabled="!state || state.isPlaying || state.timeLeft === 0"
+          :class="[
+            'play-btn',
+            {
+              locked: state?.timeLeft === 0,
+              playing: state?.isPlaying
+            }
+          ]"
+        >
+          ▶ Play
+        </button>
+        <div
+          class="countdown-text"
+          :class="{ expired: state?.timeLeft === 0 }"
+        >
+          {{ state?.timeLeft === 0 ? 'Time expired:' : 'Time left:' }}
+          {{ state?.timeLeft ?? countdownSeconds }}s
+        </div>
       </div>
-
+      <!-- AUDIO PROGRESS BAR -->
+      <div class="progress-track">
+        <div
+          class="progress-fill audio"
+          :class="{ locked: state?.timeLeft === 0 }"
+          :style="{ width: (state?.audioProgress || 0) + '%' }"
+        ></div>
+      </div>
+      <!-- IMAGE RADIO OPTIONS -->
+      <div class="flex flex-col md:flex-row gap-4 justify-center">
+        <label
+          v-for="option in options"
+          :key="option.value"
+          class="flex flex-col items-center mb-2 md:mb-0"
+        >
+          <div>
+            <input
+              type="radio"
+              :value="option.value"
+              :checked="modelValue === option.value"
+              @change="$emit('update:modelValue', option.value)"
+              @blur="$emit('blur')"
+              class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
+            />
+            <span class="text-center ml-2">
+              {{ option.value }}
+            </span>
+          </div>
+          <div class="flex justify-center items-center h-52 px-2 rounded border border-gray-200 shadow-md">
+            <img
+              :src="option.imageSrc"
+              :alt="option.value"
+              class="max-h-52 w-auto"
+            >
+          </div>
+        </label>
+      </div>
+      <p v-if="validation.$error" class="text-red-500 text-sm italic mt-2 text-center">
+        <span v-if="validation.required.$invalid">
+          Please select an option.
+        </span>
+      </p>
     </div>
-
-    <!-- AUDIO PROGRESS BAR -->
-    <div class="progress-track">
-      <div
-        class="progress-fill audio"
-        :class="{ locked: state?.timeLeft === 0 }"
-        :style="{ width: (state?.audioProgress || 0) + '%' }"
-      ></div>
-    </div>
-
-    <!-- IMAGE RADIO OPTIONS -->
-    <div class="flex flex-col md:flex-row gap-4 justify-center">
-
-      <label
-        v-for="option in options"
-        :key="option.value"
-        class="flex flex-col items-center mb-2 md:mb-0"
-      >
-
-        <div>
-          <input
-            type="radio"
-            :value="option.value"
-            :checked="modelValue === option.value"
-            @change="$emit('update:modelValue', option.value)"
-            @blur="$emit('blur')"
-            class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300"
-          />
-          <span class="text-center ml-2">
-            {{ option.value }}
-          </span>
-        </div>
-
-        <div class="flex justify-center items-center h-52 px-2 rounded border border-gray-200 shadow-md">
-          <img
-            :src="option.imageSrc"
-            :alt="option.value"
-            class="max-h-52 w-auto"
-          >
-        </div>
-
-      </label>
-
-    </div>
-
-    <p v-if="validation.$error" class="text-red-500 text-sm italic mt-2 text-center">
-      <span v-if="validation.required.$invalid">
-        Please select an option.
-      </span>
-    </p>
 
   </div>
 

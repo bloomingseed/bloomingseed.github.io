@@ -34,33 +34,28 @@ const RadioButtonQuestion = {
   },
 
   emits: ['update:modelValue', 'blur'],
-
-  computed: {
-    audioKey() {
-      return this.audioSrc
-    },
-    state() {
-      return this.audioState[this.audioKey]
-    },
-    countdownText() {
-      return this.state?.timeLeft === 0
-        ? 'Time expired:'
-        : 'Time left:'
-    }
+  data() {
+    return {
+      questionId: this.generateRandomHex(8) // Generate a random hex string as this question's ID
+    };
   },
-
-  mounted() {
-    if (!this.audioState[this.audioKey]) {
-      this.audioState[this.audioKey] = {
-        timeLeft: this.countdownSeconds,
-        isPlaying: false,
-        audioProgress: 0,
-        timer: null
-      }
-    }
-  },
-
   methods: {
+    generateRandomHex(length = 8) {
+      if (length <= 0) {
+        return "";
+      }
+
+      let randomNumber = Math.floor(Math.random() * Math.pow(16, length));
+      let hexString = randomNumber.toString(16).padStart(length, '0');
+
+      return hexString;
+    },
+    optionId(option) {
+      return `radio-${this.questionId}-${option.value}`;
+    },
+    optionKey(option) {
+      return `radio-${this.questionId}-${option.value}`;
+    },
     play() {
       if (!this.state || this.state.timeLeft === 0) return
 
@@ -105,7 +100,31 @@ const RadioButtonQuestion = {
       }, 1000)
     }
   },
-  
+  computed: {
+    audioKey() {
+      return this.audioSrc
+    },
+    state() {
+      return this.audioState[this.audioKey]
+    },
+    countdownText() {
+      return this.state?.timeLeft === 0
+        ? 'Time expired:'
+        : 'Time left:'
+    }
+  },
+
+  mounted() {
+    if (!this.audioState[this.audioKey]) {
+      this.audioState[this.audioKey] = {
+        timeLeft: this.countdownSeconds,
+        isPlaying: false,
+        audioProgress: 0,
+        timer: null
+      }
+    }
+  },
+
   beforeUnmount() {
     if (this.state?.timer) {
       clearInterval(this.state.timer)
@@ -120,80 +139,75 @@ const RadioButtonQuestion = {
         {{ label }}
       </label>
       <!-- AUDIO SECTION (only if audioSrc exists) -->
-      <template v-if="audioSrc">
-        <!-- AUDIO -->
-        <audio
-            ref="audio"
-            :src="audioSrc"
-            @timeupdate="updateAudioProgress"
-            @ended="onAudioEnded"
-        ></audio>
-
-        <!-- CONTROLS -->
-        <div class="flex justify-between gap-3 mb-3">
-
-            <button
-            type="button"
-            @click="play"
-            :disabled="!state || state.isPlaying || state.timeLeft === 0"
-            :class="[
-                'play-btn',
-                { 
-                locked: state?.timeLeft === 0,
-                playing: state?.isPlaying
-                }
-            ]"
-            >
-            ▶ Play
-            </button>
-
-            <div
-            class="countdown-text"
-            :class="{ expired: state?.timeLeft === 0 }"
-            >
-            {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
-            </div>
-
-        </div>
-
-        <!-- AUDIO PROGRESS BAR -->
-        <div class="progress-track">
-            <div
-            class="progress-fill audio"
-            :class="{ locked: state?.timeLeft === 0 }"
-            :style="{ width: (state?.audioProgress || 0) + '%' }"
-            ></div>
-        </div>
-    </template>
-
-      <!-- RADIO OPTIONS -->
-      <div
-        v-for="option in options"
-        :key="option.value"
-        class="flex items-center mb-2"
-      >
-        <input
-          type="radio"
-          :id="'radio-' + option.value"
-          :value="option.value"
-          :checked="modelValue === option.value"
-          @change="$emit('update:modelValue', option.value)"
-          class="mr-2 leading-tight"
-          @blur="$emit('blur')"
-        />
-        <label
-          :for="'radio-' + option.value"
-          class="text-gray-700"
+      <div class="qbody">
+        <template v-if="audioSrc">
+          <!-- AUDIO -->
+          <audio
+              ref="audio"
+              :src="audioSrc"
+              @timeupdate="updateAudioProgress"
+              @ended="onAudioEnded"
+          ></audio>
+          <!-- CONTROLS -->
+          <div class="flex justify-between gap-3 mb-3">
+              <button
+              type="button"
+              @click="play"
+              :disabled="!state || state.isPlaying || state.timeLeft === 0"
+              :class="[
+                  'play-btn',
+                  {
+                  locked: state?.timeLeft === 0,
+                  playing: state?.isPlaying
+                  }
+              ]"
+              >
+              ▶ Play
+              </button>
+              <div
+              class="countdown-text"
+              :class="{ expired: state?.timeLeft === 0 }"
+              >
+              {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
+              </div>
+          </div>
+          <!-- AUDIO PROGRESS BAR -->
+          <div class="progress-track">
+              <div
+              class="progress-fill audio"
+              :class="{ locked: state?.timeLeft === 0 }"
+              :style="{ width: (state?.audioProgress || 0) + '%' }"
+              ></div>
+          </div>
+            </template>
+        <!-- RADIO OPTIONS -->
+        <div
+          v-for="option in options"
+          :key="optionKey(option)"
+          class="flex items-center"
         >
-          {{ option.value }}
-        </label>
+          <input
+            type="radio"
+            :id="optionId(option)"
+            :value="option.value"
+            :checked="modelValue === option.value"
+            @change="$emit('update:modelValue', option.value)"
+            class="leading-tight"
+            @blur="$emit('blur')"
+          />
+          <label
+            :for="optionId(option)"
+            class="text-gray-700 p-2"
+          >
+            {{ option.value }}
+          </label>
+        </div>
+        <p v-if="validation.$error" class="text-red-500 text-sm italic">
+          <span v-if="validation.required.$invalid">
+            Please select an option.
+          </span>
+        </p>
       </div>
-
-      <p v-if="validation.$error" class="text-red-500 text-sm italic">
-        <span v-if="validation.required.$invalid">
-          Please select an option.
-        </span>
-      </p>
 
     </div>
   `

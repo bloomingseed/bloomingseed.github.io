@@ -101,14 +101,20 @@ input:invalid {
 /* ---------- Countdown text ---------- */
 .countdown-text {
   font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
+  /* font-weight: 600; */
+  /* color: #374151; */
+  font-style: italic;
+  color: #9ca3af;
   margin-bottom: 0.25rem;
 }
 
 .countdown-text.expired {
   color: #9ca3af;
   text-decoration: line-through;
+}
+
+.qbody {
+  padding-left: 1.5rem;
 }
 
 
