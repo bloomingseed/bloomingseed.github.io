@@ -11,6 +11,7 @@
 
 - allow respondee to know his/her score
 
+- question #18 has wrong choices (lỗ hỏng)
 - save temporary response of each test after clicking next
 - add a take rest, get ready page before each test
     - add a 0.5 step after step 0. nextStep now increases the step by 0.5 each, and there will be rest screen at those fractional step counts.

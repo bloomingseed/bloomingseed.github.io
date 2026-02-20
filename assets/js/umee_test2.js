@@ -116,7 +116,7 @@ const RatingQuestion = {
 
 const app = createApp({
     setup() {
-        const step = ref(4);
+        const step = ref(-1);
         const formData0 = ref({
             startTimestamp: '',
           });
