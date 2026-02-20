@@ -519,10 +519,12 @@
             audio-src="/assets/mp3/va 1.m4a"
             :audio-state="audioStates.step2"
           ></radio-button-question>
-
           <radio-button-question
             label="16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{ value: 'bỏ lỡ'}, { value: 'bõ lỡ'}]"
+            :options="[ {value: 'bõ lở'},
+                        {value: 'bõ lỡ'},
+                        {value: 'bỏ lỡ'},
+                        {value: 'bỏ lở'}]"
             v-model="formData2['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             :validation="v2$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             @blur="v2$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
@@ -532,7 +534,10 @@
 
           <radio-button-question
             label="17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{ value: 'sở hữu'}, { value: 'sỡ hữu'}]"
+            :options="[ {value: 'sở hửu'},
+                        {value: 'sỡ hữu'},
+                        {value: 'sỡ hửu'},
+                        {value: 'sở hữu'}]"
             v-model="formData2['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             :validation="v2$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             @blur="v2$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
@@ -552,7 +557,10 @@
           
           <radio-button-question
             label="19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{ value: 'lẽo đẽo'}, { value: 'lẻo đẽo'}]"
+            :options="[ {value: 'lẻo đẻo'},
+                        {value: 'lẽo đẽo'},
+                        {value: 'lẻo đẽo'},
+                        {value: 'lẽo đẻo'}]"
             v-model="formData2['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             :validation="v2$['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             @blur="v2$['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
