@@ -9,16 +9,12 @@
 
 ## TODO
 
-- Download an icon for the survey webpage
-- rest screen between each test
-- use an animated icon to signal the audio is playing instead of a progress bar
 - allow respondee to know his/her score
-- add indentation to answer input section
+
 - save temporary response of each test after clicking next
-- add rating number below icons
 - add a take rest, get ready page before each test
     - add a 0.5 step after step 0. nextStep now increases the step by 0.5 each, and there will be rest screen at those fractional step counts.
-- add endTimestamp to each formData object so it's convenient to see each test's duration in same sheet (?) -- maybe not, just use cross-sheet ref
+- rest screen between each test
 - screen recording?
 
 

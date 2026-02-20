@@ -16,13 +16,13 @@ const RatingQuestion = {
           <span
             v-for="n in rangeArray"
             :key="n"
-            class="cursor-pointer transition transform hover:scale-110"
-            :style="iconStyle(n)"
+            class="flex flex-col items-center cursor-pointer transition transform hover:scale-110"
             @click="select(n)"
             @mouseover="hoverValue = n"
             @mouseleave="hoverValue = null"
           >
-            <span v-html="getIcon(n)"></span>
+            <span class="text-sm text-gray-500 my-2">{{ n }}</span>
+            <span :style="iconStyle(n)" v-html="getIcon(n)"></span>
           </span>
         </div>
 
@@ -116,7 +116,7 @@ const RatingQuestion = {
 
 const app = createApp({
     setup() {
-        const step = ref(-1);
+        const step = ref(3);
         const formData0 = ref({
             startTimestamp: '',
           });
@@ -289,7 +289,6 @@ const app = createApp({
               startTimestamp: Date.now(), // record time begin the survey
             };
           showConfirmation.value = false; // close the confirmation dialog
-          // scrollToTop();
         };
 
         const scrollToTop = () => {
@@ -326,7 +325,6 @@ const app = createApp({
                 'Form Data 3': {...formData3.value},
                 'Form Data Submission': {...formDataSubmission.value},
               };
-              debugger;
 
               const response = await fetch(POST_URL, {
                 method: 'POST',
@@ -335,7 +333,6 @@ const app = createApp({
                 },
                 body: JSON.stringify(payload),
               });
-              debugger;
 
               if (!response.ok) {
                 throw new Error(`Form submission failed: ${response.status} ${response.statusText}`);

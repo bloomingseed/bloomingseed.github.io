@@ -28,6 +28,11 @@ const ImageRadioQuestion = {
     state() {
       return this.audioState[this.audioSrc]
     },
+    countdownText() {
+      return this.state?.timeLeft === 0
+        ? 'Time expired:'
+        : 'Time left:'
+    }
   },
   mounted() {
     if (!this.audioState[this.audioSrc]) {
@@ -110,37 +115,34 @@ const ImageRadioQuestion = {
         @timeupdate="updateAudioProgress"
         @ended="onAudioEnded"
       ></audio>
-      <!-- CONTROLS -->
-      <div class="flex justify-between gap-3 mb-3">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <!-- PLAY -->
         <button
           type="button"
           @click="play"
           :disabled="!state || state.isPlaying || state.timeLeft === 0"
           :class="[
-            'play-btn',
-            {
-              locked: state?.timeLeft === 0,
-              playing: state?.isPlaying
-            }
+            'play-btn flex-shrink-0',
+            { locked: state?.timeLeft === 0, playing: state?.isPlaying }
           ]"
         >
           ▶ Play
         </button>
+        <!-- PROGRESS -->
+        <div class="progress-track flex-1 min-w-[120px] max-w-xs">
+          <div
+            class="progress-fill audio"
+            :class="{ locked: state?.timeLeft === 0 }"
+            :style="{ width: (state?.audioProgress || 0) + '%' }"
+          ></div>
+        </div>
+        <!-- TIMER -->
         <div
-          class="countdown-text"
+          class="countdown-text text-sm ml-auto w-full sm:w-auto sm:ml-2 text-left"
           :class="{ expired: state?.timeLeft === 0 }"
         >
-          {{ state?.timeLeft === 0 ? 'Time expired:' : 'Time left:' }}
-          {{ state?.timeLeft ?? countdownSeconds }}s
+          {{ countdownText }} {{ state?.timeLeft ?? countdownSeconds }}s
         </div>
-      </div>
-      <!-- AUDIO PROGRESS BAR -->
-      <div class="progress-track">
-        <div
-          class="progress-fill audio"
-          :class="{ locked: state?.timeLeft === 0 }"
-          :style="{ width: (state?.audioProgress || 0) + '%' }"
-        ></div>
       </div>
       <!-- IMAGE RADIO OPTIONS -->
       <div class="flex flex-col md:flex-row gap-4 justify-center">
