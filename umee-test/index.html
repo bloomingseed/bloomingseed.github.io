@@ -522,21 +522,21 @@
 
           <radio-button-question
             label="16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{ value: 'chổi'}, { value: 'chồi'}]"
+            :options="[{ value: 'bỏ lỡ'}, { value: 'bõ lỡ'}]"
             v-model="formData2['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             :validation="v2$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             @blur="v2$['16. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
-            audio-src="/assets/mp3/choi 1.m4a"
+            audio-src="/assets/mp3/Test riêng/bo lo.m4a"
             :audio-state="audioStates.step2"
           ></radio-button-question>
 
           <radio-button-question
             label="17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{ value: 'rẻ'}, { value: 'rẽ'}]"
+            :options="[{ value: 'sở hữu'}, { value: 'sỡ hữu'}]"
             v-model="formData2['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             :validation="v2$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             @blur="v2$['17. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
-            audio-src="/assets/mp3/re 1.m4a"
+            audio-src="/assets/mp3/Test riêng/so hưu.m4a"
             :audio-state="audioStates.step2"
           ></radio-button-question>
           
@@ -546,17 +546,17 @@
             v-model="formData2['18. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
             :validation="v2$['18. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
             @blur="v2$['18. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây'].$touch()"
-            audio-src="/assets/mp3/Stimuli 5/go 2.m4a"
+            audio-src="/assets/mp3/Test riêng/trien lam.m4a"
             :audio-state="audioStates.step2"
           ></text-input-question>
           
           <radio-button-question
             label="19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:"
-            :options="[{ value: 'vả'}, { value: 'vã'}]"
+            :options="[{ value: 'lẽo đẽo'}, { value: 'lẻo đẽo'}]"
             v-model="formData2['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             :validation="v2$['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:']"
             @blur="v2$['19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:'].$touch()"
-            audio-src="/assets/mp3/va 1.m4a"
+            audio-src="/assets/mp3/Test riêng/leo đeo.m4a"
             :audio-state="audioStates.step2"
           ></radio-button-question>
 
@@ -566,7 +566,7 @@
             v-model="formData2['20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
             :validation="v2$['20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây']"
             @blur="v2$['20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây'].$touch()"
-            audio-src="/assets/mp3/Stimuli 5/go 2.m4a"
+            audio-src="/assets/mp3/Test riêng/cho nga.m4a"
             :audio-state="audioStates.step2"
           ></text-input-question>
           
@@ -893,8 +893,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@vuelidate/core"></script>
 <script src="https://cdn.jsdelivr.net/npm/@vuelidate/validators"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-<script src="/assets/js/listening_question.js"></script>
-<script src="/assets/js/image_question.js"></script>
+<!-- <script src="/assets/js/listening_question.js"></script> -->
+<!-- <script src="/assets/js/image_question.js"></script> -->
 <script src="/assets/js/image_radio_question.js"></script>
 <script src="/assets/js/text_input_question.js"></script>
 <script src="/assets/js/radio_button_question.js"></script>

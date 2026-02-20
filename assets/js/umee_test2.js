@@ -116,7 +116,7 @@ const RatingQuestion = {
 
 const app = createApp({
     setup() {
-        const step = ref(3);
+        const step = ref(4);
         const formData0 = ref({
             startTimestamp: '',
           });
@@ -380,8 +380,8 @@ const app = createApp({
     },
 })
 
-app.component('ListeningQuestion', ListeningQuestion) // registering components
-app.component('ImageQuestion', ImageQuestion) // registering components
+// app.component('ListeningQuestion', ListeningQuestion) // registering components
+// app.component('ImageQuestion', ImageQuestion) // registering components
 app.component('ImageRadioQuestion', ImageRadioQuestion) // registering components
 app.component('RatingQuestion', RatingQuestion) // registering components
 app.component('TextInputQuestion', TextInputQuestion) // registering components
