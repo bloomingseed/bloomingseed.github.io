@@ -4,7 +4,7 @@ const { createApp, ref, onMounted, computed } = Vue
 var { useVuelidate } = window.Vuelidate;
 var { required, email, minLength } = window.VuelidateValidators;
 // TESTING ONLY
-const POST_URL = "https://script.google.com/macros/s/AKfycbzMM8r3i-jOTqrxnVIuHeIAZRF07aYzRVcKIYoa16h9Od8-Jfl16iH2QiwlgnCl3jEe/exec";
+const POST_URL = "https://script.google.com/macros/s/AKfycbxORdax1yCJksBajwwzS701Q9GfZt_7d1T4ID3qdiWlh9tSm7TOrWuGf2_PCZgve_yf/exec";
 
 const RatingQuestion = {
     template: `

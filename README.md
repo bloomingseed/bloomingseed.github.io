@@ -9,7 +9,7 @@
 
 ## TODO
 
-- automatically copy cell formula and cell conditional formating in the "Calc" sheet
+- somehow the conditional formatting rules are not being applied
 
 - test 3 q 6, https://vi.wikipedia.org/wiki/D%C4%A9a
 - confirm that test 1 question 1 actually counts (since it's not in the survey)
