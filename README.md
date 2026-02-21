@@ -9,10 +9,10 @@
 
 ## TODO
 
-- allow respondee to know his/her score
+- only handle input normalization on blur
+- test 3 q 6, https://vi.wikipedia.org/wiki/D%C4%A9a
 
-- question #18 has wrong choices (lỗ hỏng)
-- change submit button to blue instead of green
+- allow respondee to know his/her score
 - save temporary response of each test after clicking next
 - add a take rest, get ready page before each test
     - add a 0.5 step after step 0. nextStep now increases the step by 0.5 each, and there will be rest screen at those fractional step counts.

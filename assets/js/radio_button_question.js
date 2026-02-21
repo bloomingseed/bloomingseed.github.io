@@ -25,7 +25,7 @@ const RadioButtonQuestion = {
     },
     countdownSeconds: {
       type: Number,
-      default: 10
+      default: 6
     },
     audioState: {                // ✅ NEW
       type: Object,
@@ -102,7 +102,7 @@ const RadioButtonQuestion = {
   },
   computed: {
     audioKey() {
-      return this.audioSrc
+      return this.label
     },
     state() {
       return this.audioState[this.audioKey]

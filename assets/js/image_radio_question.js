@@ -20,13 +20,13 @@ const ImageRadioQuestion = {
     },
     countdownSeconds: {
       type: Number,
-      default: 10
+      default: 6
     }
   },
   
   computed: {
     state() {
-      return this.audioState[this.audioSrc]
+      return this.audioState[this.label]
     },
     countdownText() {
       return this.state?.timeLeft === 0
@@ -35,8 +35,8 @@ const ImageRadioQuestion = {
     }
   },
   mounted() {
-    if (!this.audioState[this.audioSrc]) {
-      this.audioState[this.audioSrc] = {
+    if (!this.audioState[this.label]) {
+      this.audioState[this.label] = {
         timeLeft: this.countdownSeconds,
         isPlaying: false,
         audioProgress: 0,

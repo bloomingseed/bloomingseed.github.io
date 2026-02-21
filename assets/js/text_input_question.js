@@ -26,7 +26,7 @@ const TextInputQuestion = {
     },
     countdownSeconds: {
       type: Number,
-      default: 10
+      default: 6
     },
     audioState: {               // ✅ NEW
       type: Object,

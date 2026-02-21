@@ -186,6 +186,7 @@ const app = createApp({
             '1. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '2. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '3. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
+            '4. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '5. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '6. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '7. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
@@ -227,6 +228,11 @@ const app = createApp({
             '18. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '19. Chọn đáp án phù hợp nhất dựa trên file nghe sau đây:': { required },
             '20. Điền từ phù hợp nhất vào đáp án dựa trên file nghe sau đây': { required },
+            // 'Vui lòng đánh giá giọng phát âm của người nói dựa trên cảm nhận khách quan của bạn!': { required },
+            // 'Đánh giá mức độ khó của bài khảo sát này:': { required },
+            // 'Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?': { required },
+        }));
+        const rulesSubmission = computed(() => ({
             'Vui lòng đánh giá giọng phát âm của người nói dựa trên cảm nhận khách quan của bạn!': { required },
             'Đánh giá mức độ khó của bài khảo sát này:': { required },
             'Dựa trên thanh điểm 10, sau khi hoàn thành khảo sát bạn tự tin mình làm đúng được khoảng bao nhiêu phần trăm?': { required },
@@ -237,6 +243,7 @@ const app = createApp({
         const v$ = useVuelidate(rules, formData);
         const v2$ = useVuelidate(rules2, formData2);
         const v3$ = useVuelidate(rules3, formData3);
+        const vS$ = useVuelidate(rulesSubmission, formDataSubmission);
 
 
         const attemptNextStep = async () => {
@@ -260,6 +267,8 @@ const app = createApp({
             return await v2$.value.$validate();
           else if (step.value === 3)
             return await v3$.value.$validate();
+          else if (step.value === 4)
+            return await vS$.value.$validate();
           return false; // default
         };
 
@@ -316,6 +325,14 @@ const app = createApp({
         };
 
         const submitForm = async () => {
+          // 1. Validate
+          var validationResult = await validateCurrentStep();
+
+          // 2. If validation succeeds, show confirmation
+          if (!validationResult) {
+            return;
+          }
+
             isSubmitting.value = true;
             try {
               var payload = {
@@ -367,6 +384,7 @@ const app = createApp({
             v$,
             v2$,
             v3$,
+            vS$,
             rowNumber,
             isSubmitting,
             showConfirmation,
