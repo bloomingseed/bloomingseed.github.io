@@ -31,7 +31,11 @@ const TextInputQuestion = {
     audioState: {               // ✅ NEW
       type: Object,
       required: true
-    }
+    },
+    caseNormalization: {
+      type: String,
+      default: "lowercase"
+    },
   },
 
   emits: ['update:modelValue', 'blur'],
@@ -68,14 +72,30 @@ const TextInputQuestion = {
       // 1. Trim whitespace from both ends
       let trimmedText = text.trim();
 
-      // 2. Convert to lowercase
-      let lowerCaseText = trimmedText.toLowerCase();
+      // 2. Normalize case
+      let caseNormText = trimmedText.toLowerCase();
+      if(this.caseNormalization === 'uppercase')
+        caseNormText = caseNormText.toUpperCase();
 
       // 3. Replace multiple spaces with a single space
-      let singleSpacedText = lowerCaseText.replace(/\s+/g, ' ');
+      let singleSpacedText = caseNormText.replace(/\s+/g, ' ');
 
       return singleSpacedText;
     },
+
+    handleBlur(e) {
+      const normalizedText = this.normalizeText(e.target.value)
+
+      // update visual text
+      e.target.value = normalizedText
+
+      // update v-model
+      this.$emit('update:modelValue', normalizedText)
+
+      // notify parent (this triggers vuelidate $touch())
+      this.$emit('blur')
+    },
+    
     play() {
       if (!this.state || this.state.timeLeft === 0) return
 
@@ -181,9 +201,9 @@ const TextInputQuestion = {
               :placeholder="placeholder"
               :id="id"
               :value="modelValue"
-              @input="$emit('update:modelValue', normalizeText($event.target.value))"
+              @input="$emit('update:modelValue', $event.target.value)"
               class="w-full border-0 border-b border-gray-300 px-0 py-2 bg-transparent focus:outline-none focus:border-blue-500 focus:ring-0 transition duration-200"
-              @blur="$emit('blur')"
+              @blur="handleBlur"
           />
         <p v-if="validation.$error" class="text-red-500 text-sm italic">
           <span v-if="validation.required.$invalid">

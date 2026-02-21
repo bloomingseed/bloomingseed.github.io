@@ -9,8 +9,10 @@
 
 ## TODO
 
-- only handle input normalization on blur
+- automatically copy cell formula and cell conditional formating in the "Calc" sheet
+
 - test 3 q 6, https://vi.wikipedia.org/wiki/D%C4%A9a
+- confirm that test 1 question 1 actually counts (since it's not in the survey)
 
 - allow respondee to know his/her score
 - save temporary response of each test after clicking next

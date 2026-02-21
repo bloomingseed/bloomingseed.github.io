@@ -86,6 +86,7 @@
             :validation="v0$['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)']"
             :audio-state="audioStates.step0"
             @blur="v0$['Mã số tỉnh thành quê quán của bạn (VD: 92 CT)'].$touch()"
+            case-normalization="uppercase"
           ></text-input-question>
           
           <text-input-question
@@ -95,6 +96,7 @@
             :validation="v0$['STT khảo sát của bạn/ 您的被试偏号:']"
             :audio-state="audioStates.step0"
             @blur="v0$['STT khảo sát của bạn/ 您的被试偏号:'].$touch()"
+            case-normalization="uppercase"
           ></text-input-question>
 
 
